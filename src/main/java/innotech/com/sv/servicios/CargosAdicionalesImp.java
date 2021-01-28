@@ -1,0 +1,60 @@
+package innotech.com.sv.servicios;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import innotech.com.sv.modelos.CargosAdicionales;
+import innotech.com.sv.modelos.Empresa;
+import innotech.com.sv.modelosDao.CargosAdicionalesDao;
+
+@Service
+public class CargosAdicionalesImp implements ICargosAdicionales {
+
+	
+	@Autowired
+	CargosAdicionalesDao cargosAdicionalesDao;
+	
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<CargosAdicionales> findAll() {
+		return (List<CargosAdicionales>) cargosAdicionalesDao.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<CargosAdicionales> findAll(Pageable pageable) {		
+		return cargosAdicionalesDao.findAll(pageable);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public CargosAdicionales findById(Long id) {		
+		return cargosAdicionalesDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public CargosAdicionales save(CargosAdicionales cargosAdicionales) {	
+		return cargosAdicionalesDao.save(cargosAdicionales);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		cargosAdicionalesDao.deleteById(id);
+
+	}
+
+	@Override
+	public List<CargosAdicionales> findByEmpresa(Empresa empresa) {
+		// TODO Auto-generated method stub
+		return cargosAdicionalesDao.findByEmpresa(empresa);
+	}
+
+}
