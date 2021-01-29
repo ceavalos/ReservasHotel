@@ -50,18 +50,24 @@ public class Reserva implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@NotNull
 	private Date fechaInicio;
 	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@NotNull
 	private Date fechaFin;
 	
 	private Double precioReserva;
+	
 	private Promocion promocionVigente;
 	
 	private int diasOcupacion;
+	
 	private EstadoReservasEnum estadoReserva;
+	
 	private String recurrente;
+	
 	private Double montoDeposito;
 
 	public long getId() {

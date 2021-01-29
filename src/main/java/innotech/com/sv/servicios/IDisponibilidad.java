@@ -1,9 +1,11 @@
 package innotech.com.sv.servicios;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 
 import innotech.com.sv.modelos.CargosAdicionales;
 import innotech.com.sv.modelos.Disponibilidad;
@@ -21,4 +23,9 @@ public interface IDisponibilidad {
 	public void delete(Long id);
 	
 	public List<Disponibilidad> findByEmpresa(Empresa empresa);
+	
+    public List<Disponibilidad> findOcupacionEmpresa(long empresa, Date fechaini, Date fechaFin ); 
+		
+	public List<Disponibilidad> findOcupacionByEmpresaHabita(long empresa, long habitacion, Date fechaini, Date fechaFin ); 
+	
 }

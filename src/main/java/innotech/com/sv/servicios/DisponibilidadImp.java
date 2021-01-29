@@ -1,5 +1,6 @@
 package innotech.com.sv.servicios;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,8 +53,18 @@ public class DisponibilidadImp implements IDisponibilidad {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Disponibilidad> findByEmpresa(Empresa empresa) {
-		// TODO Auto-generated method stub
 		return disponibilidadDao.findByEmpresa(empresa);
+	}
+
+	@Override
+	public List<Disponibilidad> findOcupacionEmpresa(long empresa, Date fechaini, Date fechaFin) {
+		return disponibilidadDao.findOcupacionEmpresa(empresa, fechaini, fechaFin);
+	}
+
+	@Override
+	public List<Disponibilidad> findOcupacionByEmpresaHabita(long empresa, long habitacion, Date fechaini,
+			Date fechaFin) {
+		return disponibilidadDao.findOcupacionByEmpresaHabita(empresa, habitacion, fechaini, fechaFin);
 	}
 
 }
