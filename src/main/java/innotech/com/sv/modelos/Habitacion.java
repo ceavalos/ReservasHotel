@@ -13,6 +13,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ManyToAny;
@@ -20,7 +21,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="habitaciones")
+@Table(name="habitaciones", uniqueConstraints= {@UniqueConstraint(columnNames= {"empresa_id", "codigo"})})
 public class Habitacion implements Serializable{
 
 	@Id

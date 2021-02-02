@@ -2,8 +2,6 @@ package innotech.com.sv;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -11,71 +9,68 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import innotech.com.sv.modelos.Disponibilidad;
-import innotech.com.sv.modelos.Empresa;
-import innotech.com.sv.servicios.DisponibilidadImp;
-import innotech.com.sv.servicios.EmpresaServiceImp;
+import innotech.com.sv.ProcesosServices.Miscelaneos;
+import innotech.com.sv.ProcesosServices.ReservaImp;
+import innotech.com.sv.modelos.Habitacion;
 
 @SpringBootTest
 public class Reservahoteles_test1 {
 
-	@Autowired
-	private DisponibilidadImp dispobilidad;
 	
 	@Autowired
-	private EmpresaServiceImp empresaServ;
-	
-	@Test
-	void Disponibilidad_vacia() {
+	private ReservaImp reservaServicio;
+		
+	//@Test
+	void Disponibilidad_porCia() {
 		
 		 //
-		 Date fechaini = ParseFecha("2020-01-01");
-		 Date fechaFin = ParseFecha("2020-01-01");
+		 Date fechaini = Miscelaneos.ParseFecha("2021-02-01");
+		 Date fechaFin = Miscelaneos.ParseFecha("2021-02-02");
 		 
 		 long empresa = 1;
+		
+		  List<Habitacion> entro = reservaServicio.listado_disponibles(empresa, fechaini, fechaFin);
 		 
-		 List<Disponibilidad> disponible =  dispobilidad.findOcupacionEmpresa(empresa, fechaini, fechaFin);
-		 		 		 
-		 assertThat(disponible).isNull();
+		 assertThat(entro).isNotNull();
 	}
 	
-	@Test
-	void Disponibilidad_ocupada() {
+    
+	//@Test
+	void Disponibilidad_porHabitacion() {
 		
 		 //
-		 Date fechaini =  ParseFecha("2021-01-01");
-		 Date fechaFin = ParseFecha("2021-01-05");
+		 Date fechaini = Miscelaneos.ParseFecha("2021-05-02");
+		 Date fechaFin = Miscelaneos.ParseFecha("2021-05-02");
 		 
-		 long empresa = 1;
+		 long empresa    = 1;
+		 long habitacion = 1;
 		 
-		 List<Disponibilidad> disponible =  dispobilidad.findOcupacionEmpresa(empresa, fechaini, fechaFin);
+		
+		 boolean resp = reservaServicio.valida_disponibilidad(empresa, habitacion, fechaini, fechaFin);
+		
 		 
-		 for(Disponibilidad dis : disponible ) {
-			  System.out.println(" id= " + dis.getId());
-		 }
+		 assertThat(resp).isTrue();
+	}
+    
+	
+	@Test
+	void reserva_habitacion() {
+		
+		 //
+		 Date fechaini = Miscelaneos.ParseFecha("2021-05-02");
+		 Date fechaFin = Miscelaneos.ParseFecha("2021-05-02");
 		 
-		 assertThat(disponible).isNotNull();
+		 long empresa    = 1;
+		 long habitacion = 1;
+		 long reserva = 1;
+		 
+		 System.out.println("Antes de la reserva");
+		 reservaServicio.reservar(reserva, empresa, habitacion, fechaini, fechaFin);
+		 System.out.println("Luego de la reserva");
+		 
+		 assertThat(true).isTrue();
 	}
 	
-	/**
-     * Permite convertir un String en fecha (Date).
-     * @param fecha Cadena de fecha dd/MM/yyyy
-     * @return Objeto Date
-     */
-    public static Date ParseFecha(String fecha)
-    {
-        //SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-    	SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
-        Date fechaDate = null;
-        try {
-            fechaDate = formato.parse(fecha);
-        } 
-        catch (ParseException ex) 
-        {
-            System.out.println(ex);
-        }
-        return fechaDate;
-    }
-    
-    
+	
+	
 }
