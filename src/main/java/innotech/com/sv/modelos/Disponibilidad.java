@@ -56,7 +56,7 @@ public class Disponibilidad implements Serializable {
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date fecha;
 
-	@NotBlank(message = "Dirección según Dui no puede estar vacio")
+	//@NotBlank(message = "Estado no puede estar vacio")
 	private EstadoReservasEnum estado;
 
 	@Column(length = 1)

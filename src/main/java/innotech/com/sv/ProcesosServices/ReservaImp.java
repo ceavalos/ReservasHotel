@@ -1,10 +1,14 @@
 package innotech.com.sv.ProcesosServices;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +16,7 @@ import innotech.com.sv.modelos.Disponibilidad;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.EstadoReservasEnum;
 import innotech.com.sv.modelos.Habitacion;
+import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Reserva;
 import innotech.com.sv.modelosDao.ReservaDao;
 import innotech.com.sv.servicios.DisponibilidadImp;
@@ -50,19 +55,26 @@ public class ReservaImp implements IReserva {
 			EstadoReservasEnum estado = EstadoReservasEnum.Pendiente;
 
 			System.out.println("Control...2");
-			Disponibilidad disponibilidad = new Disponibilidad();
+			
 			Date fechavar = fechaini;
 			//
 			System.out.println("Control...3");
-			disponibilidad.setEmpresa(empresaSer);
-			disponibilidad.setEstado(estado);
-			disponibilidad.setReserva(reservaServ);
-			disponibilidad.setHabitacion(habitacionServ);
+			
 			//
-			System.out.println("Control...4");
+			
+			
+			GregorianCalendar cal = new GregorianCalendar();
+			
+			
 			while (fechavar.compareTo(fechafin) < 0) {	
 				System.out.println("Control...5");
-				disponibilidad.setFecha(fechaini);
+				Disponibilidad disponibilidad = new Disponibilidad();
+				disponibilidad.setEmpresa(empresaSer);
+				disponibilidad.setEstado(estado);   
+				disponibilidad.setReserva(reservaServ);
+				disponibilidad.setHabitacion(habitacionServ);
+				disponibilidad.setFecha(fechavar);
+				//				
 				disponibilidad.setH0("X");disponibilidad.setH1("X");disponibilidad.setH2("X");disponibilidad.setH3("X");
 				disponibilidad.setH4("X");disponibilidad.setH5("X");disponibilidad.setH6("X");disponibilidad.setH7("X");
 				disponibilidad.setH8("X");disponibilidad.setH9("X");disponibilidad.setH10("X");disponibilidad.setH11("X");
@@ -70,11 +82,24 @@ public class ReservaImp implements IReserva {
 				disponibilidad.setH16("X");disponibilidad.setH17("X");disponibilidad.setH18("X");disponibilidad.setH19("X");
 				disponibilidad.setH20("X");disponibilidad.setH21("X");disponibilidad.setH22("X");disponibilidad.setH23("X");
 				dispobilidadServicio.save(disponibilidad);
+				//
+				//Sumando 1 dia
+				cal.setTime(fechavar);
+				cal.add(Calendar.DATE, 1);
+				fechavar = cal.getTime();
+				
 			};
 			System.out.println("Control...6");
 			// Si la fecha es igual, se hara la reserva hasta la hora que se hace el check out.
 			if (fechavar.compareTo(fechafin)==0) {	
 				System.out.println("Control...7");
+				Disponibilidad disponibilidad = new Disponibilidad();
+				disponibilidad.setEmpresa(empresaSer);
+				disponibilidad.setEstado(estado);   
+				disponibilidad.setReserva(reservaServ);
+				disponibilidad.setHabitacion(habitacionServ);
+				disponibilidad.setFecha(fechafin);
+				//
 				disponibilidad.setFecha(fechafin);
 				disponibilidad.setH0("X");disponibilidad.setH1("X");disponibilidad.setH2("X");disponibilidad.setH3("X");
 				disponibilidad.setH4("X");disponibilidad.setH5("X");disponibilidad.setH6("X");disponibilidad.setH7("X");
@@ -192,6 +217,13 @@ public class ReservaImp implements IReserva {
 	public List<Reserva> findByEmpresa(Empresa empresa) {
 		// TODO Auto-generated method stub
 		return reservasDao.findByEmpresa(empresa);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Reserva> findAllByEmpresa(Empresa empresa, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return reservasDao.findAllByEmpresa(empresa, pageable);
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.Habitacion;
+import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Reserva;
 import innotech.com.sv.modelos.Servicio;
 
@@ -28,4 +29,6 @@ public interface IReserva {
 	public void delete(Long id);
 	
 	public List<Reserva> findByEmpresa(Empresa empresa);
+	
+	public Page<Reserva> findAllByEmpresa(Empresa empresa, Pageable pageable);
 }
