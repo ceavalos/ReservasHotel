@@ -22,15 +22,21 @@
 					</div>
 
 					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">TIPO HABITACION</label>
+						<label class="col-sm-6 col-form-label text-white bg-dark"
+							th:text="${datos.tipohabitacion.descripcion}"></label>
+					</div>
+
+					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">HABITACION RESERVA</label>
 						<label class="col-sm-6 col-form-label text-white bg-dark"
 							th:text="${datos.habitacion.codigo}"></label>
 					</div>
 
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">PERIODO RESERVA</label> <label
+						<label class="col-sm-2 col-form-label">PERIODO COBRO</label> <label
 							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${datos.periodoReserva}">PERIODO RESERVA*****</label>
+							th:text="${datos.periodoReserva}"></label>
 					</div>
 
 

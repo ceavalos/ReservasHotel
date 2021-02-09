@@ -165,9 +165,14 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
 		
 		if(id > 0) {
-			promocionServ.delete(id);
-		}
-		flash.addFlashAttribute("success", " Promoción eliminada con éxito");
+			try {
+				promocionServ.delete(id);
+				flash.addFlashAttribute("success", " Promoción eliminada con éxito");
+			} catch (Exception e) {
+				System.out.println("error al borrar " +e.getMessage());
+				flash.addFlashAttribute("error", " Error al intentar eliminar la promoción "+e.getMessage());
+			}			
+		}		
 		return "redirect:/promociones/listar";
 	}
 	

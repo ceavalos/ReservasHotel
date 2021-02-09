@@ -55,7 +55,7 @@ public class PromocionImp implements IPromocion {
 	@Transactional(readOnly = true)
 	public List<Promocion> findByEmpresa(long empresa) {
 		// TODO Auto-generated method stub
-		return promocionDao.findByEmpresa(empresa);
+		return promocionDao.findAllByEmpresa(empresa);
 	}
 
 	@Override

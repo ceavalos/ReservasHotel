@@ -16,7 +16,7 @@ import innotech.com.sv.modelos.Promocion;
 public interface PromocionDao  extends PagingAndSortingRepository<Promocion, Long>{
 	
 	@Query(value ="select * from promociones p where p.empresa_id= ?1 and p.fechafin >= trunc(sysdate)", nativeQuery = true )
-	public List<Promocion> findByEmpresa(long empresa);
+	public List<Promocion> findAllByEmpresa(long empresa);
 	
 	//@Query(" select p from promocion p where  p.empresa =?1 and  p.fechafin<= ?3" )
 	public Page<Promocion> findAllByEmpresa(Empresa empresa, Pageable pageable ); //, Date fecha

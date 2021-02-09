@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.FacturacionEnc;
 import innotech.com.sv.modelos.Habitacion;
+import innotech.com.sv.modelos.TiposHabitacion;
 
 public interface IHabitacion {
 	public List<Habitacion> findAll();
@@ -23,4 +24,6 @@ public interface IHabitacion {
 	public List<Habitacion> findByEmpresa(Empresa empresa);
 	
 	public Page<Habitacion> findByEmpresa(Empresa empresa, Pageable pageable);
+	
+	public List<Habitacion> findAllByEmpresaAndTipohabitacion(Empresa empresa, TiposHabitacion tipohabitacion);
 }

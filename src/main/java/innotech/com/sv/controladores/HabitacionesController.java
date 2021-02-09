@@ -139,9 +139,14 @@ public class HabitacionesController {
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
-			habitacionImp.delete(id);
+			try {
+				habitacionImp.delete(id);
+				flash.addFlashAttribute("success", " Habitación eliminada con éxito");
+			} catch (Exception e) {
+				System.out.println("error al borrar " +e.getMessage());
+				flash.addFlashAttribute("error", " Error al intentar eliminar habitación "+e.getMessage());
+			}
 		}
-		flash.addFlashAttribute("success", " Habitación eliminada con éxito");
 		return "redirect:/habitacion/listar";
 	}
 

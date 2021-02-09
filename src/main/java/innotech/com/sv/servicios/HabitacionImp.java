@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.Habitacion;
+import innotech.com.sv.modelos.TiposHabitacion;
 import innotech.com.sv.modelosDao.HabitacionDao;
 
 @Service
@@ -53,13 +54,19 @@ public class HabitacionImp implements IHabitacion {
 	@Transactional(readOnly = true)
 	public List<Habitacion> findByEmpresa(Empresa empresa) {
 		// TODO Auto-generated method stub
-		return habitacionDao.findByEmpresa(empresa);
+		return habitacionDao.findAllByEmpresa(empresa);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Page<Habitacion> findByEmpresa(Empresa empresa, Pageable pageable) {		
 		return habitacionDao.findAllByEmpresa(empresa, pageable);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Habitacion> findAllByEmpresaAndTipohabitacion(Empresa empresa, TiposHabitacion tipohabitacion) {		
+		return habitacionDao.findAllByEmpresaAndTipohabitacion(empresa, tipohabitacion);
 	}
 
 }

@@ -43,7 +43,7 @@ public class ReservaImp implements IReserva {
 
 	@Override
 	@Transactional
-	public void reservar(long reserva, long empresa, long habitacion, Date fechaini, Date fechafin) {
+	public String reservar(long reserva, long empresa, long habitacion, Date fechaini, Date fechafin) {
 
 		if (this.valida_disponibilidad(empresa, habitacion, fechaini, fechafin) == true) {
 			// Se procede a insertar en la reserva
@@ -113,16 +113,17 @@ public class ReservaImp implements IReserva {
 
 		} else {
 			System.out.println("La habitación no se encuentra disponible para el periodo indicado");
+			return "La habitación no se encuentra disponible para el periodo indicado";
 
 		}
-
+		return null;
 	}
 
 	@Override
 	@Transactional
-	public void cancelar(Empresa empresa, Reserva reserva) {
+	public String cancelar(Empresa empresa, Reserva reserva) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	/*

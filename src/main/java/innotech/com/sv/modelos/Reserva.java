@@ -12,6 +12,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -44,9 +45,14 @@ public class Reserva implements Serializable {
 	
 	@ManyToOne
 	@NotNull
+	private TiposHabitacion tipohabitacion;
+	
+	@ManyToOne
+	@NotNull
 	private Habitacion habitacion;
 	
-	private PeriodoReservaEnum periodoReserva;
+	@NotNull
+	private PeriodoReservaEnum periodoreserva;
 	
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="dd-MM-yyyy")
@@ -58,7 +64,8 @@ public class Reserva implements Serializable {
 	@NotNull
 	private Date fechaFin;
 	
-	private Double precioReserva;
+	@NotNull
+	private Double precioreserva;
 	
 	private Promocion promocionVigente;
 	
@@ -66,8 +73,10 @@ public class Reserva implements Serializable {
 	
 	private EstadoReservasEnum estadoReserva;
 	
+	@NotNull
 	private String recurrente;
 	
+	@NotNull
 	private Double montoDeposito;
 
 	public long getId() {
@@ -95,10 +104,10 @@ public class Reserva implements Serializable {
 		this.habitacion = habitacion;
 	}
 	public PeriodoReservaEnum getPeriodoReserva() {
-		return periodoReserva;
+		return periodoreserva;
 	}
 	public void setPeriodoReserva(PeriodoReservaEnum periodoReserva) {
-		this.periodoReserva = periodoReserva;
+		this.periodoreserva = periodoReserva;
 	}
 	public Date getFechaInicio() {
 		return fechaInicio;
@@ -112,11 +121,11 @@ public class Reserva implements Serializable {
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
-	public Double getPrecioReserva() {
-		return precioReserva;
+	public Double getPrecioreserva() {
+		return precioreserva;
 	}
-	public void setPrecioReserva(Double precioReserva) {
-		this.precioReserva = precioReserva;
+	public void setPrecioreserva(Double precioreserva) {
+		this.precioreserva = precioreserva;
 	}
 	public Promocion getPromocionVigente() {
 		return promocionVigente;
@@ -147,6 +156,12 @@ public class Reserva implements Serializable {
 	}
 	public void setMontoDeposito(Double montoDeposito) {
 		this.montoDeposito = montoDeposito;
+	}
+	public TiposHabitacion getTipohabitacion() {
+		return tipohabitacion;
+	}
+	public void setTipohabitacion(TiposHabitacion tipohabitacion) {
+		this.tipohabitacion = tipohabitacion;
 	}
 	
 	

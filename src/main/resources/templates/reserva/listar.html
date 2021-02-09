@@ -46,10 +46,10 @@
 							<td th:text="${dato.periodoReserva}"></td>
 							<td th:text="${dato.fechaInicio}"></td>
 							<td th:text="${dato.fechaFin}"></td>
-							<td th:text="${dato.estadoReserva}"></td>
-							<td><a class="btn btn-primary btn-xs" th:href="@{/reserva/procesar/} + ${dato.id}" th:text="'PROCESAR'" ></a></td>
+							<td th:text="${dato.estadoReserva}"></td>	
+							<td><a class="btn btn-primary btn-xs" th:href="@{/reserva/procesar/} + ${dato.id}"   th:text="'PROCESAR'"  th:disabled=true></a></td>							
 							<td><a class="btn btn-primary btn-xs" th:href="@{/reserva/form/} + ${dato.id}" th:text="'EDITAR'" ></a></td>
-					       <td><a class="btn btn-danger btn-xs" th:href="@{/reserva/eliminar/} + ${dato.id}" th:text="'ELIMINAR'"					      
+					        <td><a class="btn btn-danger btn-xs" th:href="@{/reserva/eliminar/} + ${dato.id}" th:text="'ELIMINAR'"					      
 					        onclick="  return confirm('Estas seguro que quieres eliminar?');"  ></a></td>   					          
 						</tr>
 					 

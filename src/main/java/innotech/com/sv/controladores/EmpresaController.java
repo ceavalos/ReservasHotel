@@ -165,9 +165,14 @@ public class EmpresaController {
 	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
 		
 		if(id > 0) {
-			empresaServ.delete(id);
+			try {
+				empresaServ.delete(id);
+				flash.addFlashAttribute("success", " Empresa eliminada con éxito");
+			} catch (Exception e) {
+				System.out.println("error al borrar " +e.getMessage());
+				flash.addFlashAttribute("error", " Error al intentar eliminar empresa "+e.getMessage());
+			}
 		}
-		flash.addFlashAttribute("success", " Empresa eliminada con éxito");
 		return "redirect:/empresa/listar";
 	}
 	

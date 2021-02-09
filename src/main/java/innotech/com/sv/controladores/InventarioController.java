@@ -137,9 +137,15 @@ public class InventarioController {
 	public String eliminar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
 
 		if (id > 0) {
-			inventarioImp.delete(id);
+			try {
+				inventarioImp.delete(id);
+				flash.addFlashAttribute("success", " Activo eliminado con éxito");
+			} catch (Exception e) {
+				System.out.println("error al borrar " +e.getMessage());
+				flash.addFlashAttribute("error", " Error al intentar eliminar Activo "+e.getMessage());
+			}			
 		}
-		flash.addFlashAttribute("success", " Activo eliminado con éxito");
+		
 		return "redirect:/inventario/listar";
 	}
 	

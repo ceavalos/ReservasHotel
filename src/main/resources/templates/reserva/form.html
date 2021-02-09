@@ -1,9 +1,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/layout :: head">
+
+
 </head>
 <body>
 
 	<header th:replace="layout/layout :: header"> </header>
+
+
+
 
 	<div class="container py-4">
 		<div class="card bg-light">
@@ -32,77 +37,183 @@
 								th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></small>
 						</div>
 					</div>
-					
+
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">EMPRESA</label>
 						<div class="col-sm-10">
-							 	<select th:field="*{empresa}" class="form-control"
+							<select th:field="*{empresa}" class="form-control"
 								th:errorclass="'form-control alert-danger'">
-							
+
 								<option th:each="Item : ${empresa}" th:value="${Item.id}"
 									th:text="${Item.nombre}" th:selected="false" />
+
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label" 
+							name="tipohabitacion">TIPO HABITACION</label>
+						<div class="col-sm-10">
+							<select th:field="*{tipohabitacion}" class="form-control"
+								th:errorclass="'form-control alert-danger'" id="tipohabitacion"
+								name="tipohabitacion">
+
+								<option th:value=null th:text="---"
+									th:selected="false" />
 									
-							</select> 
-						</div>
-					</div>
-<!-- 
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">DESCRIPCION</label>
-						<div class="col-sm-10">
-							<input type="text" th:field="*{descripcion}" class="form-control"
-								placeholder="Descripción promoción"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('descripcion')}"
-								th:errors="*{descripcion}"></small>
+								<option th:each="Item : ${tiposhabitaciones}"
+									th:value="${Item.id}" th:text="${Item.descripcion}"
+									th:selected="false" />
+
+							</select>
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Fecha Inicio</label>
+						<label class="col-sm-2 col-form-label">HABITACION RESERVA</label>
 						<div class="col-sm-10">
-							<input type="date" th:field="*{fechainicio}" class="form-control"
-								placeholder="Fecha Inicio promoción"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('fechainicio')}"
-								th:errors="*{fechainicio}"></small>
+							<select th:field="*{habitacion}" class="form-control"
+								th:errorclass="'form-control alert-danger'" id="habitacion"
+								name="habitacion">
+
+								<option th:fragment="models" th:each="Item : ${habitaciones}"
+									th:value="${Item.id}" th:text="${Item.codigo}"
+									th:selected="false" />
+
+							</select>
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Fecha Fin</label>
+						<label class="col-sm-2 col-form-label">PERIODO COBRO</label>
 						<div class="col-sm-10">
 
-							<input type="date" th:field="*{fechafin}" class="form-control"
-								placeholder="Fecha Fin de promoción"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('fechafin')}" th:errors="*{fechafin}"></small>
+							<select th:field="*{periodoReserva}" class="form-control"
+								th:errorclass="'form-control alert-danger'" id="periodoreserva" name="periodoreserva">
+								
+								<option th:value=null th:text="---"
+									th:selected="false" />
+									
+								<option	 th:each=" state: ${T(innotech.com.sv.modelos.PeriodoReservaEnum).values() }"
+									    th:value="${state}" th:text="${state}"></option>
+							</select>
 						</div>
 					</div>
 
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">PORC DESCUENTO</label>
-						<div class="col-sm-10">
-							<input type="text" th:field="*{porcdescuento}"
-								class="form-control" placeholder="Porcentaje Descuento"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('porcdescuento')}"
-								th:errors="*{porcdescuento}"></small>
-						</div>
-					</div>
- -->
-					<div>
-						<input type="submit" value="Crear Promociones"
-							class="btn btn-primary" />
+			    <div class="form-group row">
+				<label class="col-sm-2 col-form-label">PRECIO</label>
+				<div class="col-sm-10">
 
-					</div>
-				</form>
+					<select th:field="*{precioreserva}" class="form-control" name="precioreserva" id="precioreserva"
+						th:errorclass="'form-control alert-danger'">
+						
+						<option th:value=null th:text="---"></option>
+						
+						<option th:fragment="precio"  th:each=" item: ${precio} " th:value="${item}"
+							th:text="${item}"></option>
+
+					</select>
+				</div>
 			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">PROMOCION VIGENTE</label>
+				<div class="col-sm-10">
+
+					<select th:field="*{promocionVigente}" class="form-control"
+						th:errorclass="'form-control alert-danger'">
+						<option th:value=null th:text="---"></option>
+						<option th:each=" item: ${promocion} " th:value="${item.id}"
+							th:text="${item.descripcion}"></option>
+
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">FECHA INICIO</label>
+				<div class="col-sm-10">
+					<input type="date" th:field="*{fechaInicio}" class="form-control"
+						placeholder="Fecha Inicio reserva"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('fechaInicio')}"
+						th:errors="*{fechaInicio}"></small>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">FECHA FIN</label>
+				<div class="col-sm-10">
+
+					<input type="date" th:field="*{fechaFin}" class="form-control"
+						placeholder="Fecha Fin de Reserva"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}"></small>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">RECURRENTE</label>
+				<div class="col-sm-10">
+
+					<select th:field="*{recurrente}" class="form-control"
+						th:errorclass="'form-control alert-danger'">
+						<option th:value="N" th:text="No"></option>
+						<option th:value="S" th:text="Si"></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">MONTO DEPOSITO</label>
+				<div class="col-sm-10">
+					<input type="number" th:field="*{montoDeposito}"
+						class="form-control"
+						placeholder="Monto efectivo dejado en deposito"
+						th:errorclass="'form-control alert-danger'" /> <small
+						class="form-text text-danger"
+						th:if="${#fields.hasErrors('montoDeposito')}"
+						th:errors="*{montoDeposito}"></small>
+				</div>
+			</div>
+
+			<div>
+				<input type="submit" value="Crear Promociones"
+					class="btn btn-primary" />
+
+			</div>
+
+			<button id="bt2">Load Fragment 2</button>
+			<script>
+				/*<![CDATA[*/
+
+				$("#tipohabitacion").on("change", function() {
+							//alert("Cambio de tipohabitacion " +$("#tipohabitacion").serialize());
+							$("#habitacion").load('/reserva/ajaxhabita', ($("#tipohabitacion").serialize()) );
+						});
+
+				$("#periodoreserva").on("change", function() {
+					url='/reserva/ajaxprecio?'+$("#tipohabitacion").serialize()+'&'+$("#periodoreserva").serialize()
+					//alert(url);
+					$("#precioreserva").load(url);				
+				});
+				
+				$("#bt2").on("click", function() {
+					alert("Salida2");
+					//$("#habitacion").load('/reserva/ajaxhabita', $("#tipohabitacion").serialize());
+				});
+				/*]]>*/
+			</script>
+
+
+			</form>
 		</div>
 	</div>
+	</div>
+
 	<footer th:replace="layout/layout :: footer"></footer>
 
 </body>

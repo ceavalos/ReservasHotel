@@ -168,10 +168,16 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	@RequestMapping(value="/eliminar/{id}")
 	public String eliminar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
 		
-		if(id > 0) {
-			tipoHabitacionServ.delete(id);
+		if(id > 0) {			
+			try {
+				tipoHabitacionServ.delete(id);
+				flash.addFlashAttribute("success", " Promoción eliminada con éxito");
+			} catch (Exception e) {
+				System.out.println("error al borrar " +e.getMessage());
+				flash.addFlashAttribute("error", " Error al intentar eliminar tipo de habitación "+e.getMessage());
+			}
+						
 		}
-		flash.addFlashAttribute("success", " Promoción eliminada con éxito");
 		return "redirect:/tiposhabitacion/listar";
 	}
 	
