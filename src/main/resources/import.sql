@@ -51,7 +51,7 @@ INSERT INTO habitaciones (CODIGO, ESTADO, EMPRESA_ID, TIPOHABITACION_ID) VALUES 
 INSERT INTO activos (CODIGO, COMENTARIOS, DESCRIPCION, ESTADO, EMPRESA_ID, HABITACION_ID,costoadquisisicion  ) VALUES ('ACT001', 'COMPRADO EN ENERO 2021 CF#2334', 'VENTILADOR DE PARED', 0, 1, 1, 10);
 INSERT INTO activos (CODIGO, COMENTARIOS, DESCRIPCION, ESTADO, EMPRESA_ID, costoadquisisicion  ) VALUES ('ACT002', 'COMPRADO EN ENERO 2021 CF#2334', 'VENTILADOR DE PARED', 0, 1, 20 );
 
-INSERT INTO reservas (empresa_id, tipohabitacion_id, habitacion_id, fecha_Inicio, fecha_Fin , dias_ocupacion, estado_Reserva, monto_Deposito, periodoreserva, precioreserva,recurrente  ) VALUES (1,1, 1, '2021-03-01',  '2021-03-04' , 4, 0, 0, 1, 15, 'N');
+INSERT INTO reservas (empresa_id, cliente_id, tipohabitacion_id, habitacion_id, fecha_Inicio, fecha_Fin , dias_ocupacion, estado_Reserva, monto_Deposito, periodoreserva, precioreserva,recurrente  ) VALUES (1, 1, 1, 1, '2021-03-01',  '2021-03-04' , 4, 0, 0, 1, 15, 'N');
 
 INSERT INTO DISPONIBILIDAD  (RESERVA_ID, EMPRESA_ID, HABITACION_ID, ESTADO, FECHA  ) VALUES (1, 1, 1, 0, '2021-01-01' );
 INSERT INTO DISPONIBILIDAD  (RESERVA_ID, EMPRESA_ID, HABITACION_ID, ESTADO, FECHA  ) VALUES (1, 1, 1, 0, '2021-02-01' );

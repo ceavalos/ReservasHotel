@@ -27,6 +27,7 @@
 						<tr>
 							<th>ID</th>
 							<th>EMPRESA</th>
+							<th>CLIENTE</th>
 							<th>HABITACION</th>
 							<th>PERIODO RESERVA</th>
 							<th>FECHA INICIO</th>
@@ -42,6 +43,7 @@
 						<tr th:each="dato: ${datos}">							
 						 	<td> <a class="btn btn-primary btn-xs bg" th:href="@{/reserva/ver/} + ${dato.id}" th:text="${dato.id}"> </a>   </td>
 							<td th:text="${dato.empresa.nombre}"></td>
+							<td th:text="${dato.cliente.nombredui}"></td>
 							<td th:text="${dato.habitacion.codigo}"></td>
 							<td th:text="${dato.periodoReserva}"></td>
 							<td th:text="${dato.fechaInicio}"></td>

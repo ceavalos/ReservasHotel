@@ -50,7 +50,7 @@
 						<label class="col-sm-2 col-form-label">DESCRIPCION</label>
 						<div class="col-sm-10">
 							<input type="text" th:field="*{descripcion}" class="form-control"
-								placeholder="Descripción promoción"
+								placeholder="Descripción del Descuento"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('descripcion')}"
@@ -62,7 +62,7 @@
 						<label class="col-sm-2 col-form-label">Fecha Inicio</label>
 						<div class="col-sm-10">
 							<input type="date" th:field="*{fechainicio}" class="form-control"
-								placeholder="Fecha Inicio promoción"
+								placeholder="Fecha Inicio del Descuento"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('fechainicio')}"
@@ -75,7 +75,7 @@
 						<div class="col-sm-10">
 
 							<input type="date" th:field="*{fechafin}" class="form-control"
-								placeholder="Fecha Fin de promoción"
+								placeholder="Fecha Fin del Descuento"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('fechafin')}" th:errors="*{fechafin}"></small>

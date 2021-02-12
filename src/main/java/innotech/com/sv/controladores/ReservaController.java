@@ -1,6 +1,9 @@
 package innotech.com.sv.controladores;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +35,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import innotech.com.sv.ProcesosServices.Miscelaneos;
 import innotech.com.sv.ProcesosServices.ReservaImp;
+import innotech.com.sv.modelos.Cliente;
 import innotech.com.sv.modelos.Disponibilidad;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.EstadoReservasEnum;
@@ -41,6 +45,7 @@ import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Reserva;
 import innotech.com.sv.modelos.TiposHabitacion;
 import innotech.com.sv.paginator.PageRender;
+import innotech.com.sv.servicios.ClientesImp;
 import innotech.com.sv.servicios.DisponibilidadImp;
 import innotech.com.sv.servicios.EmpresaServiceImp;
 import innotech.com.sv.servicios.HabitacionImp;
@@ -48,7 +53,7 @@ import innotech.com.sv.servicios.PromocionImp;
 import innotech.com.sv.servicios.TipoHabitacionImp;
 
 @Controller
-@SessionAttributes({"reserva","empresa","promocion","tiposhabitaciones","habitaciones","precio"})
+@SessionAttributes({"reserva","empresa","promocion","tiposhabitaciones","habitaciones","precio", "clientes"})
 @RequestMapping("/reserva")
 public class ReservaController {
 protected final Log logger = LogFactory.getLog(this.getClass());
@@ -77,6 +82,9 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	@Autowired
 	DisponibilidadImp disponibilidadServImp;
 	
+	@Autowired
+	ClientesImp clientesServImp;
+	
 	@RequestMapping(value="/listar", method = RequestMethod.GET)
 	public String inicial (@RequestParam(name="page", defaultValue="0") int page,   Model modelo, 			  
 			   HttpServletRequest request ) {
@@ -95,6 +103,9 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 		
 		List<Promocion> promociones = promocionServ.findByEmpresa(mieempresa.getId());
 		
+		List<Cliente> cliente = clientesServImp.findAll();
+				
+				
 		for(Promocion promo : promociones) {
 			System.out.println(" id promocion -->"+ promo.getId());
 		}
@@ -112,9 +123,9 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 		modelo.addAttribute("titulo","Mantenimiento de Reservas");	
 		modelo.addAttribute("datos",reserva);
 		modelo.addAttribute("empresa",mieempresa);
+		modelo.addAttribute("clientes",cliente);
 		modelo.addAttribute("page",pageRender);
 		modelo.addAttribute("habitaciones",habitacion);
-		//modelo.addAttribute("habitaciones",null);
 		modelo.addAttribute("promocion",promociones);	
 		modelo.addAttribute("precio",120);	
 		modelo.addAttribute("tiposhabitaciones",tiposHabitacion);		
@@ -257,10 +268,20 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 			model.addAttribute("titulo","Creación de Reservas");						
 			return "reserva/form";
 		} else {
-			
-			//Validaciones sobre la reserva
+			//Validaciones fechas de la reserva
 			Date fechaini = reserva.getFechaInicio();
-			Date fechafin = reserva.getFechaFin();
+			Date fechafin = reserva.getFechaFin();			
+			Date fechaactual = new Date();			
+			//
+			if((Miscelaneos.restafechas(fechaini, fechaactual) )>0.5) {
+				String mensajeFlash ="La fecha Inicial debe ser mayor o igual a la fecha Actual";
+				 flash.addFlashAttribute("error",  mensajeFlash);
+				 model.addAttribute("error",mensajeFlash);		
+				 model.addAttribute("titulo","Edicion de Reservas");						
+				 return "reserva/form";
+			};
+			
+			
 			if(fechaini.compareTo(fechafin)>=0) {
 				String mensajeFlash ="La fecha final debe ser mayor a la inicial";
 				 flash.addFlashAttribute("success",  mensajeFlash);
@@ -269,10 +290,39 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 				 return "reserva/form";
 			};
 			
+			//validando que el periodo de cobro este acorde a las fechas
+			// si el periodo son 7 dias, deben de haber 7 dias entre una fecha y otra
+			// si es un mes deben de estar de dia del mes al dia del mes proximo.
+			switch (reserva.getPeriodoreserva()) {
+			  case Semana :
+				  int diasreserva = Miscelaneos.restafechas(fechaini, fechafin);
+				  double dias =  diasreserva % 7;
+				  if ( dias != 0) {
+					     String mensajeFlash ="El periodo de cobro en Semana y las fechas de reserva no son consistentes (El periodo de reserva debe abarcar semanas completas).";
+						 flash.addFlashAttribute("success",  mensajeFlash);
+						 model.addAttribute("error",mensajeFlash);		
+						 model.addAttribute("titulo","Edicion de Reservas");						
+						 return "reserva/form";
+				   };
+				break;
+	          case Mes :
+	        	  int diafehainicial = fechaini.getDate();
+	        	  int diafehafinal   = fechafin.getDate();
+	        	  if ( diafehainicial != diafehafinal) {
+					     String mensajeFlash ="El periodo de cobro en Mes y las fechas de reserva no son consistentes (El periodo de reserva mensual debe abarcar el mismo dia del mes de inicio y final).";
+						 flash.addFlashAttribute("success",  mensajeFlash);
+						 model.addAttribute("error",mensajeFlash);		
+						 model.addAttribute("titulo","Edicion de Reservas");						
+						 return "reserva/form";
+				   };
+				break;
+			 
+			}
+			
 			//Validando disponibilidad de la habitacion
 			boolean disponible = reservaServimp.valida_disponibilidad(reserva.getEmpresa().getId(), reserva.getHabitacion().getId(), reserva.getFechaInicio(), reserva.getFechaFin() );
 			//
-			System.out.println( "Disponible habitacion " + disponible);
+			//System.out.println( "Disponible habitacion " + disponible);
 			if (!disponible) {
 				String mensajeFlash ="Para el periodo de tiempo especificado la habitacion " + reserva.getHabitacion().getCodigo()+ " no esta Disponible";
 				 flash.addFlashAttribute("success",  mensajeFlash);
@@ -281,6 +331,8 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 				 return "reserva/form";
 			}
 			
+			
+			//Colocando reserva en Pendiente
 			reserva.setEstadoReserva(EstadoReservasEnum.Pendiente);
 			//Calculando dias ocupacion						
 			reserva.setDiasOcupacion(Miscelaneos.restafechas(fechaini, fechafin));

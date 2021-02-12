@@ -239,9 +239,17 @@ public class ReservaImp implements IReserva {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Page<Reserva> findAllByEmpresaPendientes(long empresa, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return  reservasDao.findAllByEmpresaPendientes(empresa, pageable);
+	}
+
+	@Override
+	@Transactional
+	public String procesa_reserva(long reserva, long empresa, long habitacion, Date fechaini, Date fechafin) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

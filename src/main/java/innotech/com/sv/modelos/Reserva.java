@@ -51,6 +51,10 @@ public class Reserva implements Serializable {
 	@NotNull
 	private Habitacion habitacion;
 	
+	@ManyToOne
+	@NotNull
+	private Cliente cliente;
+	
 	@NotNull
 	private PeriodoReservaEnum periodoreserva;
 	
@@ -163,6 +167,18 @@ public class Reserva implements Serializable {
 	}
 	public void setTipohabitacion(TiposHabitacion tipohabitacion) {
 		this.tipohabitacion = tipohabitacion;
+	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	public PeriodoReservaEnum getPeriodoreserva() {
+		return periodoreserva;
+	}
+	public void setPeriodoreserva(PeriodoReservaEnum periodoreserva) {
+		this.periodoreserva = periodoreserva;
 	}
 	
 	

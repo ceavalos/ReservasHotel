@@ -2,6 +2,7 @@ package innotech.com.sv.controladores;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,7 +87,7 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	     modelo.addAttribute("mensaje", mensaje);
 	     
 		//modelo.addAttribute("mensaje","hola desde thymeleaf");		
-		modelo.addAttribute("titulo","Mantenimiento de Promociones");	
+		modelo.addAttribute("titulo","Mantenimiento de Descuentos");	
 		modelo.addAttribute("datos",promocion);
 		modelo.addAttribute("empresa",mieempresa);
 		modelo.addAttribute("page",pageRender);
@@ -98,7 +99,7 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	public String ver(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 		Promocion promocion = promocionServ.findById(id);
 		if (promocion==null) {
-			flash.addAttribute("error", "La promoción no existe en la Base de datos");
+			flash.addAttribute("error", "El descuento no existe en la Base de datos");
 			return "redirect:/promocion/listar";
 		}
 		//
@@ -113,7 +114,7 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	public String form (Model modelo) {	
 		Promocion promocion = new Promocion();
 		//---
-		modelo.addAttribute("titulo","Creación de Promociones");	
+		modelo.addAttribute("titulo","Creación de Descuentos");	
 		modelo.addAttribute("promocion",promocion);
 		
 		return "promocion/form";
@@ -124,12 +125,32 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 			RedirectAttributes flash, SessionStatus status) {	
 		
 		if (result.hasErrors()) {
-			model.addAttribute("titulo","Creación de Promociones");						
+			model.addAttribute("titulo","Creación de Descuentos");						
 			return "promocion/form";
 		} else {
-			String mensajeFlash =  ( String.valueOf(promocion.getId()) != null)? "Promoción Editada con éxito" : " Promoción guardada con éxito "  ;
+			//Validaciones fechas de la reserva
+			Date fechaini = promocion.getFechainicio();
+			Date fechafin = promocion.getFechafin();
+			if(fechaini.compareTo(fechafin)>=0) {
+				String mensajeFlash ="La fecha final debe ser mayor a la inicial";
+				 flash.addFlashAttribute("error",  mensajeFlash);
+				 model.addAttribute("error",mensajeFlash);		
+				 model.addAttribute("titulo","Creación de Descuentos");						
+				 return "promocion/form";
+			};
+			// Validando que la fecha inicial debe ser mayor a la fecha actual
+			Date fechaactual = new Date();
+			if(fechaini.compareTo(fechaactual)<0) {
+				String mensajeFlash ="La fecha Inicial debe ser mayor o igual a la fecha Actual";
+				 flash.addFlashAttribute("error",  mensajeFlash);
+				 model.addAttribute("error",mensajeFlash);		
+				 model.addAttribute("titulo","Creación de Descuentos");						
+				 return "promocion/form";
+			};
+			//
+			String mensajeFlash =  ( String.valueOf(promocion.getId()) != null)? "Descuento Editado con éxito" : " Descuento guardado con éxito "  ;
 		     promocionServ.save(promocion);
-			model.addAttribute("titulo","Creación de Promociones");
+			model.addAttribute("titulo","Creación de Descuentos");
 		    status.setComplete();
 		    flash.addFlashAttribute("success", mensajeFlash );
 		
@@ -145,18 +166,18 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 		if(id > 0) {
 			promocion = promocionServ.findById(id);
 			if (promocion == null) {
-				flash.addFlashAttribute("error", " La promoción no existe en la Base de datos");
+				flash.addFlashAttribute("error", " El Descuento no existe en la Base de datos");
 				return "redirect:promocion/listar";
 			}
 		} else {
-			flash.addFlashAttribute("error", " Promoción no existe");
+			flash.addFlashAttribute("error", " Descuento no existe");
 			return "redirect:/promocion/listar";
 		}
 		
 		
 		model.put("promocion", promocion);
 		model.put("titulo", "Editar Promocion");
-		flash.addFlashAttribute("success", " Promocion guardada con éxito");
+		flash.addFlashAttribute("success", " Descuento guardado con éxito");
 		return "promocion/form";
 	}
 	
@@ -167,10 +188,10 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 		if(id > 0) {
 			try {
 				promocionServ.delete(id);
-				flash.addFlashAttribute("success", " Promoción eliminada con éxito");
+				flash.addFlashAttribute("success", " Descuento eliminado con éxito");
 			} catch (Exception e) {
 				System.out.println("error al borrar " +e.getMessage());
-				flash.addFlashAttribute("error", " Error al intentar eliminar la promoción "+e.getMessage());
+				flash.addFlashAttribute("error", " Error al intentar eliminar el descuento "+e.getMessage());
 			}			
 		}		
 		return "redirect:/promociones/listar";

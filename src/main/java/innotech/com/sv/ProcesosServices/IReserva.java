@@ -13,6 +13,7 @@ import innotech.com.sv.modelos.Reserva;
 import innotech.com.sv.modelos.Servicio;
 
 public interface IReserva {
+	public String procesa_reserva(long reserva, long empresa, long habitacion, Date fechaini, Date fechafin);
 	public String reservar(long reserva, long empresa, long habitacion, Date fechaini, Date fechafin) ;
 	public String cancelar(Empresa empresa, Reserva reserva) ;
 	public boolean valida_disponibilidad(long empresa, long habitacion, Date fecha_ini, Date fecha_fin);	
