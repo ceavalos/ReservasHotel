@@ -55,19 +55,20 @@ public class Reserva implements Serializable {
 	private PeriodoReservaEnum periodoreserva;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@NotNull
 	private Date fechaInicio;
 	
 	@Temporal(TemporalType.DATE)
-	@DateTimeFormat(pattern="dd-MM-yyyy")
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@NotNull
 	private Date fechaFin;
 	
 	@NotNull
 	private Double precioreserva;
 	
-	private Promocion promocionVigente;
+	@ManyToOne
+	private Promocion promocionvigente;
 	
 	private int diasOcupacion;
 	
@@ -127,11 +128,11 @@ public class Reserva implements Serializable {
 	public void setPrecioreserva(Double precioreserva) {
 		this.precioreserva = precioreserva;
 	}
-	public Promocion getPromocionVigente() {
-		return promocionVigente;
+	public Promocion getPromocionvigente() {
+		return promocionvigente;
 	}
-	public void setPromocionVigente(Promocion promocionVigente) {
-		this.promocionVigente = promocionVigente;
+	public void setPromocionvigente(Promocion promocionvigente) {
+		this.promocionvigente = promocionvigente;
 	}
 	public int getDiasOcupacion() {
 		return diasOcupacion;

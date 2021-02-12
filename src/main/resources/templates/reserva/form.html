@@ -7,9 +7,6 @@
 
 	<header th:replace="layout/layout :: header"> </header>
 
-
-
-
 	<div class="container py-4">
 		<div class="card bg-light">
 
@@ -107,9 +104,7 @@
 
 					<select th:field="*{precioreserva}" class="form-control" name="precioreserva" id="precioreserva"
 						th:errorclass="'form-control alert-danger'">
-						
-						<option th:value=null th:text="---"></option>
-						
+										
 						<option th:fragment="precio"  th:each=" item: ${precio} " th:value="${item}"
 							th:text="${item}"></option>
 
@@ -121,12 +116,12 @@
 				<label class="col-sm-2 col-form-label">PROMOCION VIGENTE</label>
 				<div class="col-sm-10">
 
-					<select th:field="*{promocionVigente}" class="form-control"
+					<select th:field="*{promocionvigente}" class="form-control"
 						th:errorclass="'form-control alert-danger'">
+												
 						<option th:value=null th:text="---"></option>
 						<option th:each=" item: ${promocion} " th:value="${item.id}"
 							th:text="${item.descripcion}"></option>
-
 					</select>
 				</div>
 			</div>
@@ -207,7 +202,6 @@
 				});
 				/*]]>*/
 			</script>
-
 
 			</form>
 		</div>

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import innotech.com.sv.modelos.CargosAdicionales;
 import innotech.com.sv.modelos.Disponibilidad;
 import innotech.com.sv.modelos.Empresa;
+import innotech.com.sv.modelos.Reserva;
 
 public interface IDisponibilidad {
 	public List<Disponibilidad> findAll();
@@ -27,5 +28,7 @@ public interface IDisponibilidad {
     public List<Disponibilidad> findOcupacionEmpresa(long empresa, Date fechaini, Date fechaFin ); 
 		
 	public List<Disponibilidad> findOcupacionByEmpresaHabita(long empresa, long habitacion, Date fechaini, Date fechaFin ); 
+	
+	public long deleteByReserva(Reserva reserva);
 	
 }

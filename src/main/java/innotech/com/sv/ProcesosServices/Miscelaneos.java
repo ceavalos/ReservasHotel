@@ -29,4 +29,8 @@ public class Miscelaneos {
         return fechaDate;
     }
     
+    public static int restafechas(Date fechaini, Date fechafin) {    	
+		int diasocupacion =  (int) ((fechafin.getTime() -  fechaini.getTime()) / 86400000);
+		return diasocupacion;
+    }
 }

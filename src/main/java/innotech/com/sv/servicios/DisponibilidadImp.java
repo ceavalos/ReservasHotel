@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import innotech.com.sv.modelos.Disponibilidad;
 import innotech.com.sv.modelos.Empresa;
+import innotech.com.sv.modelos.Reserva;
 import innotech.com.sv.modelosDao.DisponibilidadDao;
 
 @Service
@@ -57,14 +58,23 @@ public class DisponibilidadImp implements IDisponibilidad {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Disponibilidad> findOcupacionEmpresa(long empresa, Date fechaini, Date fechaFin) {
 		return disponibilidadDao.findOcupacionEmpresa(empresa, fechaini, fechaFin);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Disponibilidad> findOcupacionByEmpresaHabita(long empresa, long habitacion, Date fechaini,
 			Date fechaFin) {
 		return disponibilidadDao.findOcupacionByEmpresaHabita(empresa, habitacion, fechaini, fechaFin);
+	}
+
+	@Override
+	@Transactional
+	public long deleteByReserva(Reserva reserva) {
+		// TODO Auto-generated method stub
+		return disponibilidadDao.deleteByReserva(reserva);
 	}
 
 }

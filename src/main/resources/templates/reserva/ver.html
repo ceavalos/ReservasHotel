@@ -61,15 +61,15 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">PRECIO RESERVA</label> <label
 							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${datos.precioReserva}"></label>
+							th:text="${datos.precioreserva}"></label>
 					</div>
 
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">PROMOCION APLICADA</label>
 						<label class="col-sm-6 col-form-label text-white bg-dark">
-							<th:block th:if="${datos.promocionVigente != null}"
-								th:text="${datos.promocionVigente.descripcion}"></th:block> <th:block
-								th:unless="${datos.promocionVigente}"></th:block>
+							<th:block th:if="${datos.promocionvigente != null}"
+								th:text="${datos.promocionvigente.descripcion}"></th:block> <th:block
+								th:unless="${datos.promocionvigente}"></th:block>
 
 						</label>
 					</div>

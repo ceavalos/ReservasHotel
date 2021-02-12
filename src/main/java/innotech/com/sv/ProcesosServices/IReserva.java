@@ -31,4 +31,6 @@ public interface IReserva {
 	public List<Reserva> findByEmpresa(Empresa empresa);
 	
 	public Page<Reserva> findAllByEmpresa(Empresa empresa, Pageable pageable);
+	
+	public Page<Reserva> findAllByEmpresaPendientes(long empresa, Pageable pageable);
 }

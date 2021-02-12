@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.dialect.hint.IndexQueryHintHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -31,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import innotech.com.sv.ProcesosServices.Miscelaneos;
 import innotech.com.sv.ProcesosServices.ReservaImp;
+import innotech.com.sv.modelos.Disponibilidad;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.EstadoReservasEnum;
 import innotech.com.sv.modelos.Habitacion;
@@ -39,13 +41,14 @@ import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Reserva;
 import innotech.com.sv.modelos.TiposHabitacion;
 import innotech.com.sv.paginator.PageRender;
+import innotech.com.sv.servicios.DisponibilidadImp;
 import innotech.com.sv.servicios.EmpresaServiceImp;
 import innotech.com.sv.servicios.HabitacionImp;
 import innotech.com.sv.servicios.PromocionImp;
 import innotech.com.sv.servicios.TipoHabitacionImp;
 
 @Controller
-@SessionAttributes({"reserva","empresa","promocion","tiposhabitaciones"})
+@SessionAttributes({"reserva","empresa","promocion","tiposhabitaciones","habitaciones","precio"})
 @RequestMapping("/reserva")
 public class ReservaController {
 protected final Log logger = LogFactory.getLog(this.getClass());
@@ -71,6 +74,9 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	@Autowired
 	TipoHabitacionImp tipoHabitacionServImp;
 	
+	@Autowired
+	DisponibilidadImp disponibilidadServImp;
+	
 	@RequestMapping(value="/listar", method = RequestMethod.GET)
 	public String inicial (@RequestParam(name="page", defaultValue="0") int page,   Model modelo, 			  
 			   HttpServletRequest request ) {
@@ -82,11 +88,16 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 				 
 		Pageable  pageRequest =  PageRequest.of(page, elemento);
 					
-		Page<Reserva> reserva = reservaServimp.findAllByEmpresa(mieempresa, pageRequest)  ;
+		//Page<Reserva> reserva = reservaServimp.findAllByEmpresa(mieempresa, pageRequest)  ;
+		Page<Reserva> reserva = reservaServimp.findAllByEmpresaPendientes(mieempresa.getId(), pageRequest);
 		
 		List<Habitacion> habitacion = null;
 		
 		List<Promocion> promociones = promocionServ.findByEmpresa(mieempresa.getId());
+		
+		for(Promocion promo : promociones) {
+			System.out.println(" id promocion -->"+ promo.getId());
+		}
 		
 		PageRender<Reserva> pageRender = new PageRender<>("/reserva/listar", reserva, elemento) ;
 		 
@@ -103,6 +114,7 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 		modelo.addAttribute("empresa",mieempresa);
 		modelo.addAttribute("page",pageRender);
 		modelo.addAttribute("habitaciones",habitacion);
+		//modelo.addAttribute("habitaciones",null);
 		modelo.addAttribute("promocion",promociones);	
 		modelo.addAttribute("precio",120);	
 		modelo.addAttribute("tiposhabitaciones",tiposHabitacion);		
@@ -198,7 +210,7 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 				return "redirect:/reserva/listar";}
 			
 			 //
-			 Date fechaini = Miscelaneos.ParseFecha("2021-03-05");
+			 /*Date fechaini = Miscelaneos.ParseFecha("2021-03-05");
 			 Date fechaFin = Miscelaneos.ParseFecha("2021-03-20");
 			  
 			 long empresa    = 1;
@@ -208,16 +220,15 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 			 System.out.println("Antes de la reserva");
 	
 			 String resp = reservaServimp.reservar(reservas, empresa, habitacion, fechaini, fechaFin);
-			 
+			 */
+			/*String resp = reservaServimp.reservar(reserva.getId(), reserva.getEmpresa().getId(), reserva.getHabitacion().getId(), reserva.getFechaInicio(), reserva.getFechaFin());
 			 if (resp != null) {
 				 flash.addFlashAttribute("error",resp);				 
 			 } else {
 				 reserva.setEstadoReserva(EstadoReservasEnum.Activa);
 				 reservaServimp.save(reserva);
 				 flash.addFlashAttribute("info","Reserva efectuada con éxito");
-			 }
-			
-			
+			 }	*/		
 		} else {
 			flash.addFlashAttribute("error", id + " Id de Reserva no existe");
 			return "redirect:/reserva/listar";
@@ -241,12 +252,53 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	public String salvar (@Valid @ModelAttribute(value="reserva") Reserva reserva, BindingResult result, Model model, 
 			RedirectAttributes flash, SessionStatus status) {	
 		
+
 		if (result.hasErrors()) {
 			model.addAttribute("titulo","Creación de Reservas");						
 			return "reserva/form";
 		} else {
-			String mensajeFlash =  ( String.valueOf(reserva.getId()) != null)? "Reserva Editada con éxito" : " Reserva guardada con éxito "  ;
+			
+			//Validaciones sobre la reserva
+			Date fechaini = reserva.getFechaInicio();
+			Date fechafin = reserva.getFechaFin();
+			if(fechaini.compareTo(fechafin)>=0) {
+				String mensajeFlash ="La fecha final debe ser mayor a la inicial";
+				 flash.addFlashAttribute("success",  mensajeFlash);
+				 model.addAttribute("error",mensajeFlash);		
+				 model.addAttribute("titulo","Edicion de Reservas");						
+				 return "reserva/form";
+			};
+			
+			//Validando disponibilidad de la habitacion
+			boolean disponible = reservaServimp.valida_disponibilidad(reserva.getEmpresa().getId(), reserva.getHabitacion().getId(), reserva.getFechaInicio(), reserva.getFechaFin() );
+			//
+			System.out.println( "Disponible habitacion " + disponible);
+			if (!disponible) {
+				String mensajeFlash ="Para el periodo de tiempo especificado la habitacion " + reserva.getHabitacion().getCodigo()+ " no esta Disponible";
+				 flash.addFlashAttribute("success",  mensajeFlash);
+				 model.addAttribute("error",mensajeFlash);		
+				 model.addAttribute("titulo","Edicion de Reservas");						
+				 return "reserva/form";
+			}
+			
+			reserva.setEstadoReserva(EstadoReservasEnum.Pendiente);
+			//Calculando dias ocupacion						
+			reserva.setDiasOcupacion(Miscelaneos.restafechas(fechaini, fechafin));
+			
+			String mensajeFlash =  !(String.valueOf(reserva.getId()).isEmpty() ) ? "Reserva Editada con éxito" : " Reserva guardada con éxito "  ;
 			reservaServimp.save(reserva);
+			// *****
+			// ahora que ya se guardo el encabezado de la reserva procedemos a guardar la ocupacion
+            String resp = reservaServimp.reservar(reserva.getId(), reserva.getEmpresa().getId(), reserva.getHabitacion().getId(), fechaini, fechafin);
+			 //****
+			 if (resp != null) {
+				 flash.addFlashAttribute("error",resp);	
+				 flash.addFlashAttribute("success",  resp);
+				 model.addAttribute("error",resp);		
+				 model.addAttribute("titulo","Edicion de Reservas");						
+				 return "reserva/form";
+			 } ;
+			 
 			model.addAttribute("titulo","Creación de Reservas");
 		    status.setComplete();
 		    flash.addFlashAttribute("success", mensajeFlash );
@@ -256,26 +308,35 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	};
 	 
 	@RequestMapping(value="/form/{id}")
-	public String editar(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
-		
-		Promocion promocion = null;
-		
+	public String editar(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash, HttpServletRequest request) {
+				
+		Reserva reserva = null;
 		if(id > 0) {
-			promocion = promocionServ.findById(id);
-			if (promocion == null) {
-				flash.addFlashAttribute("error", " La promoción no existe en la Base de datos");
-				return "redirect:promocion/listar";
+			reserva = reservaServimp.findById(id);
+			if (reserva == null) {
+				flash.addFlashAttribute("error", " La reserva no existe en la Base de datos");
+				return "redirect:reserva/listar";
 			}
 		} else {
-			flash.addFlashAttribute("error", " Promoción no existe");
+			flash.addFlashAttribute("error", " reserva no existe");
 			return "redirect:/reserva/listar";
 		}
 		
+		HttpSession misession= request.getSession(true);		 
+		mieempresa = (Empresa) misession.getAttribute("empresaCart");
 		
-		model.put("promocion", promocion);
-		model.put("titulo", "Editar Promocion");
-		flash.addFlashAttribute("success", " Promocion guardada con éxito");
-		return "promocion/form";
+		List<Habitacion> habitacion = habitacionServImp.findByEmpresa(mieempresa);
+		//
+		// eliminando la ocupacion para volver a validar el periodo.
+		disponibilidadServImp.deleteByReserva(reserva);	
+		
+		model.put("habitaciones",habitacion);
+		
+		model.put("reserva",reserva);
+		model.put("titulo", "Editar Reserva");
+		flash.addFlashAttribute("success", " Reserva guardada con éxito");
+		System.out.println("Desde Editar reservas");
+		return "reserva/form";
 	}
 	
 	
@@ -286,6 +347,28 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 			try {
 				reservaServimp.delete(id);
 				flash.addFlashAttribute("success", " Reservacion eliminada con éxito");
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("error al borrar " +e.getMessage());
+				flash.addFlashAttribute("error", " Error al intentar eliminar la reserva "+e.getMessage());
+			}
+			
+		}		
+		return "redirect:/reserva/listar";
+	}
+	
+	@RequestMapping(value="/cancelar/{id}")
+	public String cancelar(@PathVariable(value="id") Long id, RedirectAttributes flash) {
+		
+		if(id > 0) {
+			try {
+				Reserva reserva = null;
+				reserva = reservaServimp.findById(id);
+				disponibilidadServImp.deleteByReserva(reserva);
+				reservaServimp.cancelar(reserva.getEmpresa(), reserva);				
+				/*reservaServimp.delete(id);
+				flash.addFlashAttribute("success", " Reservacion eliminada con éxito");
+				*/
 			} catch (Exception e) {
 				// TODO: handle exception
 				System.out.println("error al borrar " +e.getMessage());

@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import innotech.com.sv.modelos.Disponibilidad;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.EstadoReservasEnum;
+import innotech.com.sv.modelos.EstadosEnum;
 import innotech.com.sv.modelos.Habitacion;
 import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Reserva;
@@ -48,17 +49,17 @@ public class ReservaImp implements IReserva {
 		if (this.valida_disponibilidad(empresa, habitacion, fechaini, fechafin) == true) {
 			// Se procede a insertar en la reserva
 
-			 System.out.println("Control...1");
+			// System.out.println("Control...1");
 			Empresa empresaSer        = empresaServicio.findById(empresa);
 			Reserva reservaServ       = reservaImpServ.findById(reserva);
 			Habitacion habitacionServ = habitacionesServicio.findById(habitacion);
 			EstadoReservasEnum estado = EstadoReservasEnum.Pendiente;
 
-			System.out.println("Control...2");
+			//System.out.println("Control...2");
 			
 			Date fechavar = fechaini;
 			//
-			System.out.println("Control...3");
+			//System.out.println("Control...3");
 			
 			//
 			
@@ -122,8 +123,18 @@ public class ReservaImp implements IReserva {
 	@Override
 	@Transactional
 	public String cancelar(Empresa empresa, Reserva reserva) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		//
+		String mensaje = null;
+			Reserva reservaServ       = reservaImpServ.findById(reserva.getId());
+		if (reservaServ.getEstadoReserva() == EstadoReservasEnum.Pendiente) {
+			reservaServ.setEstadoReserva(EstadoReservasEnum.Cancelada);
+			reservaImpServ.save(reservaServ);
+			mensaje = "";
+		} else {
+			mensaje = "La reserva debe estar pendiente para Cancelarse";
+		};
+		return mensaje;
 	}
 
 	/*
@@ -225,6 +236,12 @@ public class ReservaImp implements IReserva {
 	public Page<Reserva> findAllByEmpresa(Empresa empresa, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return reservasDao.findAllByEmpresa(empresa, pageable);
+	}
+
+	@Override
+	public Page<Reserva> findAllByEmpresaPendientes(long empresa, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return  reservasDao.findAllByEmpresaPendientes(empresa, pageable);
 	}
 
 }
