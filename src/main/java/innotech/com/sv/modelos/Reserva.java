@@ -9,13 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import innotech.com.sv.ProcesosServices.Miscelaneos;
 
 @Entity
 @Table(name = "reservas")
@@ -37,7 +39,35 @@ public class Reserva implements Serializable {
 	@PrePersist
 	public void preinsert() {
 		this.fecha_ins = new Date();
+		//this.descuento = (double) this.promocionvigente.getPorcdescuento();
+		actualizatotal();	
 	}
+	
+	@PreUpdate
+	public void update() {		
+		actualizatotal();
+	}
+	
+	//Procedimiento para insertar el total de la reserva
+	public void actualizatotal() {
+		double promocion = 0;
+		if  (this.promocionvigente != null  ) {			
+			this.descuento = (double) this.promocionvigente.getPorcdescuento();
+		}else {this.descuento = (double) 0; };
+		//
+		//System.out.println("Descuento --> " + descuento);
+		if (this.periodoreserva == PeriodoReservaEnum.Dia ) {
+			  //System.out.println("Descuento Dia--> " );
+					this.montoReservaConDescuento = (double) ( this.precioreserva * this.diasOcupacion )-( this.precioreserva * this.diasOcupacion *this.descuento/100 ) ;
+			}else if (this.periodoreserva == PeriodoReservaEnum.Semana) {
+				//System.out.println("Descuento Semana--> " );
+					this.montoReservaConDescuento = (double)  ( this.precioreserva * this.diasOcupacion / 7)-( this.precioreserva * this.diasOcupacion/7 *this.descuento/100 ) ;
+			}else if (this.periodoreserva == PeriodoReservaEnum.Mes) {								
+				int mesesReserva = Miscelaneos.calcularMesesAFecha(this.fechaInicio, this.fechaFin) ;		
+				//System.out.println("Descuento Mes--> " +mesesReserva);				
+				this.montoReservaConDescuento = (double) ( mesesReserva *  this.precioreserva) - ( mesesReserva *  this.precioreserva * this.descuento/100);
+		};
+	};
 	
 	@ManyToOne
     @NotNull
@@ -72,12 +102,31 @@ public class Reserva implements Serializable {
 	private Double precioreserva;
 	
 	@ManyToOne
-	private Promocion promocionvigente;
+	private Promocion promocionvigente = null;
 	
 	private int diasOcupacion;
 	
 	private EstadoReservasEnum estadoReserva;
 	
+	private Double montoReservaConDescuento = (double) 0;
+	
+	private Double descuento = (double) 0;
+	
+	public Double getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(Double descuento) {
+		this.descuento = descuento;
+	}
+
+	public Double getMontoReservaConDescuento() {
+		return montoReservaConDescuento;
+	}
+	public void setMontoReservaConDescuento(Double montoReservaConDescuento) {
+		this.montoReservaConDescuento = montoReservaConDescuento;
+	}
+
 	@NotNull
 	private String recurrente;
 	

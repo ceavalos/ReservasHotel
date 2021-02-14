@@ -220,32 +220,16 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 				flash.addFlashAttribute("error", " La reserva no esta en estado Pendiente y no se puede procesar");
 				return "redirect:/reserva/listar";}
 			
-			 //
-			 /*Date fechaini = Miscelaneos.ParseFecha("2021-03-05");
-			 Date fechaFin = Miscelaneos.ParseFecha("2021-03-20");
-			  
-			 long empresa    = 1;
-			 long habitacion = 1;
-			 long reservas   = 1;
-			 
-			 System.out.println("Antes de la reserva");
-	
-			 String resp = reservaServimp.reservar(reservas, empresa, habitacion, fechaini, fechaFin);
-			 */
-			/*String resp = reservaServimp.reservar(reserva.getId(), reserva.getEmpresa().getId(), reserva.getHabitacion().getId(), reserva.getFechaInicio(), reserva.getFechaFin());
-			 if (resp != null) {
-				 flash.addFlashAttribute("error",resp);				 
-			 } else {
-				 reserva.setEstadoReserva(EstadoReservasEnum.Activa);
-				 reservaServimp.save(reserva);
-				 flash.addFlashAttribute("info","Reserva efectuada con éxito");
-			 }	*/		
+			model.put("titulo","Procesamiento de Reservas");	
+			model.put("datos",reserva);
+			return "/reserva/procesar";
+			
 		} else {
 			flash.addFlashAttribute("error", id + " Id de Reserva no existe");
-			return "redirect:/reserva/listar";
+			return "redirect:/empresa/listar";
 		}
 		
-		return "redirect:/reserva/listar";
+		
 	};
 	
 	
@@ -376,6 +360,7 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 		
 		HttpSession misession= request.getSession(true);		 
 		mieempresa = (Empresa) misession.getAttribute("empresaCart");
+		reserva.setEstadoReserva(EstadoReservasEnum.Cancelada);
 		
 		List<Habitacion> habitacion = habitacionServImp.findByEmpresa(mieempresa);
 		//
