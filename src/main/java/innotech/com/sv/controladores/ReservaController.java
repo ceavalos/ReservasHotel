@@ -126,8 +126,7 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 		modelo.addAttribute("clientes",cliente);
 		modelo.addAttribute("page",pageRender);
 		modelo.addAttribute("habitaciones",habitacion);
-		modelo.addAttribute("promocion",promociones);	
-		modelo.addAttribute("precio",120);	
+		modelo.addAttribute("promocion",promociones);			
 		modelo.addAttribute("tiposhabitaciones",tiposHabitacion);		
 		modelo.addAttribute("pendiente",EstadoReservasEnum.Pendiente);
 		return "reserva/listar";
@@ -220,7 +219,30 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 				flash.addFlashAttribute("error", " La reserva no esta en estado Pendiente y no se puede procesar");
 				return "redirect:/reserva/listar";}
 			
-			model.put("titulo","Procesamiento de Reservas");	
+			if (reserva.getMontoReservaConDescuento() == null) {
+				flash.addFlashAttribute("error", " Error el total de Reserva con descuento esta en nulo. Genere nuevamente la reserva");
+				return "redirect:/reserva/listar";}
+			
+			model.put("titulo","Procesamiento de Ocupaciones");	
+			model.put("datos",reserva);
+			return "/reserva/procesar";
+			
+		} else {
+			flash.addFlashAttribute("error", id + " Id de Reserva no existe");
+			return "redirect:/empresa/listar";
+		}
+		
+		
+	};
+	
+	@RequestMapping(value="/ocupacion/{id}")
+	public String ActivaOcupcion (@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {	
+	    //
+		if(id > 0) {
+			Reserva reserva = reservaServimp.findById(id);
+			//
+			
+			model.put("titulo","Procesamiento de Ocupaciones");	
 			model.put("datos",reserva);
 			return "/reserva/procesar";
 			
@@ -365,11 +387,11 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 		List<Habitacion> habitacion = habitacionServImp.findByEmpresa(mieempresa);
 		//
 		// eliminando la ocupacion para volver a validar el periodo.
-		disponibilidadServImp.deleteByReserva(reserva);	
-		
-		model.put("habitaciones",habitacion);
-		
+		disponibilidadServImp.deleteByReserva(reserva);		
+		model.put("precio",reserva.getPrecioreserva());	
+		model.put("habitaciones",habitacion);		
 		model.put("reserva",reserva);
+		
 		model.put("titulo", "Editar Reserva");
 		flash.addFlashAttribute("success", " Reserva guardada con éxito");
 		System.out.println("Desde Editar reservas");

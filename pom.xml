@@ -71,6 +71,14 @@
 			<version>1.0.5</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.16.0</version>
+		</dependency>
+
+
 		<!-- https://mvnrepository.com/artifact/org.webjars.npm/sweetalert2 -->
 		<dependency>
 			<groupId>org.webjars.npm</groupId>
@@ -91,13 +99,13 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
-		
-		
+
+
 	</dependencies>
 
 	<build>

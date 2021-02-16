@@ -6,7 +6,18 @@
 <body>
 	<div class="container py-4">
 		<div class="card bg-light">
-			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-header">
+				<h4 class="card-title">
+					<h1
+						class="text-secondary border border-success border-top-0 border-left-0 border-right-0"
+						th:text="${titulo}"></h1>
+
+					<a class="btn btn-sm mr-1 btn-primary btn-xs float-left p"
+						th:href="@{'/reserva/solicitud/excel/'}+ ${datos.id}">IMPRIMIR SOLICITUD</a> <a
+						class="btn btn-sm mr-1 btn-primary btn-xs float-left"
+						th:href="@{'/reserva/export/excel'}">CREAR OCUPACION</a>
+				</h4>
+			</div>
 			<div class="card-body">
 				<ul class="list-group">
 					<div class="form-group row">
