@@ -20,4 +20,7 @@ public interface IOcupacion {
 	public void delete(Long id);
 	
 	public List<Ocupacion> findByEmpresa(Empresa empresa);
+	
+	public Page<Ocupacion> findAllByEmpresa(long empresa, Pageable pageable ); 
+	
 }

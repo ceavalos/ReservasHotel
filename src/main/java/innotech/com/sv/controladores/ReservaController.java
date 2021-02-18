@@ -39,7 +39,9 @@ import innotech.com.sv.modelos.Cliente;
 import innotech.com.sv.modelos.Disponibilidad;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.EstadoReservasEnum;
+import innotech.com.sv.modelos.EstadosEnum;
 import innotech.com.sv.modelos.Habitacion;
+import innotech.com.sv.modelos.Ocupacion;
 import innotech.com.sv.modelos.PeriodoReservaEnum;
 import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Reserva;
@@ -49,6 +51,7 @@ import innotech.com.sv.servicios.ClientesImp;
 import innotech.com.sv.servicios.DisponibilidadImp;
 import innotech.com.sv.servicios.EmpresaServiceImp;
 import innotech.com.sv.servicios.HabitacionImp;
+import innotech.com.sv.servicios.OcupacionImp;
 import innotech.com.sv.servicios.PromocionImp;
 import innotech.com.sv.servicios.TipoHabitacionImp;
 
@@ -84,6 +87,9 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	
 	@Autowired
 	ClientesImp clientesServImp;
+	
+	@Autowired
+	OcupacionImp ocupacionServImp;
 	
 	@RequestMapping(value="/listar", method = RequestMethod.GET)
 	public String inicial (@RequestParam(name="page", defaultValue="0") int page,   Model modelo, 			  
@@ -235,20 +241,36 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 		
 	};
 	
-	@RequestMapping(value="/ocupacion/{id}")
-	public String ActivaOcupcion (@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {	
+	@RequestMapping(value="/activaocupacion/{id}")
+	public String ActivaOcupcion (@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash, SessionStatus status) {	
 	    //
 		if(id > 0) {
 			Reserva reserva = reservaServimp.findById(id);
 			//
-			
-			model.put("titulo","Procesamiento de Ocupaciones");	
+			Ocupacion ocupacion = new Ocupacion();
+			//
+			reserva.setEstadoReserva(EstadoReservasEnum.Activa);
+			// almacenando los valores para ocupacion
+			ocupacion.setEmpresa(reserva.getEmpresa());
+			ocupacion.setFechaInicioOcupacion(reserva.getFechaInicio());
+			ocupacion.setFechaFinOcupacion(reserva.getFechaFin());
+			ocupacion.setEstado(EstadosEnum.Activo);
+			ocupacion.setReserva(reserva);
+			//
+			/*model.put("titulo","Procesamiento de Ocupaciones");	
 			model.put("datos",reserva);
-			return "/reserva/procesar";
+			*/
+			reservaServimp.save(reserva);
+			ocupacionServImp.save(ocupacion);
+			 status.setComplete();
+			//
+			
+			flash.addFlashAttribute("success", " Reserva efectuada con éxito");
+			return "redirect:/reserva/listar";
 			
 		} else {
 			flash.addFlashAttribute("error", id + " Id de Reserva no existe");
-			return "redirect:/empresa/listar";
+			return "redirect:/reserva/listar";
 		}
 		
 		

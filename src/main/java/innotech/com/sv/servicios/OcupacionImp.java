@@ -56,4 +56,11 @@ public class OcupacionImp implements IOcupacion {
 		return ocupacionDao.findByEmpresa(empresa);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Ocupacion> findAllByEmpresa(long empresa, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return ocupacionDao.findAllByEmpresa(empresa, pageable);
+	}
+
 }

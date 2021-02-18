@@ -13,9 +13,10 @@
 						th:text="${titulo}"></h1>
 
 					<a class="btn btn-sm mr-1 btn-primary btn-xs float-left p"
-						th:href="@{'/reserva/solicitud/excel/'}+ ${datos.id}">IMPRIMIR SOLICITUD</a> <a
-						class="btn btn-sm mr-1 btn-primary btn-xs float-left"
-						th:href="@{'/reserva/export/excel'}">CREAR OCUPACION</a>
+						th:href="@{'/reserva/solicitud/excel/'}+ ${datos.id}">IMPRIMIR SOLICITUD</a> 
+					
+					<a	class="btn btn-sm mr-1 btn-primary btn-xs float-left"
+						th:href="@{'/reserva/activaocupacion/'}+${datos.id}">CREAR OCUPACION</a>
 				</h4>
 			</div>
 			<div class="card-body">
