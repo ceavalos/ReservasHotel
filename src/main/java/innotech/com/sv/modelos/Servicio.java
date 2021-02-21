@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -43,13 +43,35 @@ public class Servicio implements Serializable {
     @NotNull
 	private Empresa empresa;
 	
+	@NotBlank(message = "Nombre del servicio no puede estar vacio")
+	private String nombre;
+	
 	@NotBlank(message = "Descripción del servicio no puede estar vacio")
 	private String descripcion;
 	
 	@NotBlank(message = "Precio Unitario del servicio no puede estar vacio")
 	private double precioUnitario;
 	
-	private Promocion promocion;
+	private Promocion promocion = null;
+	
+	@NotBlank(message = "Estado del servicio no puede estar vacio")
+	private EstadosEnum estado;
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public EstadosEnum getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadosEnum estado) {
+		this.estado = estado;
+	}
 
 	public long getId() {
 		return id;

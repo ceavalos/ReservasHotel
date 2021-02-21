@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.Servicio;
 import innotech.com.sv.modelosDao.ServicioDao;
 
+@Service
 public class ServicioImp implements IServicio {
 
 	@Autowired
@@ -52,6 +54,13 @@ public class ServicioImp implements IServicio {
 	public List<Servicio> findByEmpresa(Empresa empresa) {
 		// TODO Auto-generated method stub
 		return servicioDao.findByEmpresa(empresa);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Servicio> findAllByEmpresaPendientes(long empresa, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return servicioDao.findAllByEmpresaPendientes(empresa, pageable);
 	}
 
 }

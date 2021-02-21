@@ -1,6 +1,5 @@
 package innotech.com.sv.controladores;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import innotech.com.sv.modelos.Activo;
 import innotech.com.sv.modelos.Empresa;
-import innotech.com.sv.modelos.Habitacion;
 import innotech.com.sv.modelos.Ocupacion;
-import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.paginator.PageRender;
 import innotech.com.sv.servicios.OcupacionImp;
 

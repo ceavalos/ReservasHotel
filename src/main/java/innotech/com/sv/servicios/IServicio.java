@@ -21,4 +21,6 @@ public interface IServicio {
 	public void delete(Long id);
 	
 	public List<Servicio> findByEmpresa(Empresa empresa);
+	
+	public Page<Servicio> findAllByEmpresaPendientes(long empresa, Pageable pageable);
 }
