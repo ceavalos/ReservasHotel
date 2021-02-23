@@ -35,7 +35,7 @@ import innotech.com.sv.servicios.MonedaImp;
 
 
 @Controller
-@SessionAttributes({"empresa","moneda"})
+@SessionAttributes({"empresa","moneda","datos"})
 @RequestMapping("/empresa")
 public class EmpresaController {
 	

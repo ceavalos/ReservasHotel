@@ -18,8 +18,8 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "servicios")
-public class Servicio implements Serializable {
+@Table(name = "claseservicios")
+public class ClaseServicio implements Serializable {
 
 	/**
 	 * 
@@ -49,13 +49,6 @@ public class Servicio implements Serializable {
 	@NotBlank(message = "Descripción del servicio no puede estar vacio")
 	private String descripcion;
 	
-	//@NotBlank(message = "Precio Unitario del servicio no puede estar vacio")
-	private double precioUnitario;
-	
-	@ManyToOne
-	//@NotBlank(message = "Clase de servicio no puede estar vacio")
-	private ClaseServicio claseServicio;
-	//private Promocion promocion = null;
 	
 	//@NotBlank(message = "Estado del servicio no puede estar vacio")
 	private EstadosEnum estado = EstadosEnum.Activo;
@@ -108,30 +101,6 @@ public class Servicio implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public double getPrecioUnitario() {
-		return precioUnitario;
-	}
 
-	public void setPrecioUnitario(double precioUnitario) {
-		this.precioUnitario = precioUnitario;
-	}
-
-	public ClaseServicio getClaseServicio() {
-		return claseServicio;
-	}
-
-	public void setClaseServicio(ClaseServicio claseServicio) {
-		this.claseServicio = claseServicio;
-	}
-
-	/*public Promocion getPromocion() {
-		return promocion;
-	}
-
-	public void setPromocion(Promocion promocion) {
-		this.promocion = promocion;
-	}
-	*/
-	
 	
 }

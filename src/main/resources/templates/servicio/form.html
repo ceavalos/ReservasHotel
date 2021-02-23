@@ -11,17 +11,17 @@
 			<h1 th:text="${titulo}"
 				class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h1>
 
-			<div th:object="${empresa}" th:remove="tag">
+			<div th:object="${servicio}" th:remove="tag">
 				<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
 					<li th:each="err: ${#fields.errors('*')}" th:text="${err}"></li>
 				</ul>
 			</div>
 
 			<div class="card-body">
-				<form th:action="@{/servicio/form}" th:object="${datos}"
+				<form th:action="@{/servicio/form}" th:object="${servicio}"
 					method="post">
 
-<!-- 
+
 					<div class="form-group row" hidden="true">
 						<label class="col-sm-2 col-form-label">Id</label>
 						<div th:if="${#fields.hasErrors('*')}">errors</div>
@@ -33,84 +33,91 @@
 						</div>
 					</div>
 
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">EMPRESA</label>
+						<div class="col-sm-10">
+							<select th:field="*{empresa}" class="form-control"
+								th:errorclass="'form-control alert-danger'">
+
+								<option th:each="Item : ${empresa}" th:value="${Item.id}"
+									th:text="${Item.nombre}" th:selected="false" />
+
+							</select>
+							<small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('empresa')}" th:errors="*{empresa}"></small>
+							
+						</div>
+					</div>
 
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Nombre Empresa</label>
+						<label class="col-sm-2 col-form-label">CLASE SERVICIO</label>
+						<div class="col-sm-10">
+							<select th:field="*{claseServicio}" class="form-control"
+								th:errorclass="'form-control alert-danger'">
+
+								<option th:each="Item : ${claseservicio}" th:value="${Item.id}"
+									th:text="${Item.nombre}" th:selected="false" />
+
+							</select>
+							<small
+								class="form-text text-danger"
+								th:if="${#fields.hasErrors('claseServicio')}" th:errors="*{claseServicio}"></small>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">NOMBRE SERVICIO</label>
 						<div class="col-sm-10">
 							<input type="text" th:field="*{nombre}" class="form-control"
-								placeholder="Nombre de la Empresa"
+								placeholder="Nombre del Servicio"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
 								th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small>
 						</div>
 					</div>
 
+
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Dirección</label>
+						<label class="col-sm-2 col-form-label">DESCRIPCION
+							SERVICIO</label>
 						<div class="col-sm-10">
-							<input type="text" th:field="*{direccion}" class="form-control"
-								placeholder="Dirección de la Empresa"
+							<input type="text" th:field="*{descripcion}" class="form-control"
+								placeholder="Descripcion del servicio"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
-								th:if="${#fields.hasErrors('nombre')}" th:errors="*{direccion}"></small>
+								th:if="${#fields.hasErrors('descripcion')}"
+								th:errors="*{descripcion}"></small>
 						</div>
 					</div>
 
-
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Nit</label>
+						<label class="col-sm-2 col-form-label">PRECIO</label>
 						<div class="col-sm-10">
-							<input type="text" th:field="*{nit}" class="form-control"
-								placeholder="Numero de Nit"
+							<input type="number" th:field="*{precioUnitario}" step="any"
+								class="form-control" placeholder="Precio Unitario"
 								th:errorclass="'form-control alert-danger'" /> <small
 								class="form-text text-danger"
-								th:if="${#fields.hasErrors('nit')}" th:errors="*{nit}"></small>
+								th:if="${#fields.hasErrors('precioUnitario')}"
+								th:errors="*{precioUnitario}"></small>
 						</div>
 					</div>
 
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Nrc</label>
+						<label class="col-sm-2 col-form-label">ESTADO</label>
 						<div class="col-sm-10">
-							<input type="text" th:field="*{nrc}" class="form-control"
-								placeholder="Numero de Registro"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('nrc')}" th:errors="*{nrc}"></small>
-						</div>
-					</div>
 
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Representante</label>
-						<div class="col-sm-10">
-							<input type="text" th:field="*{nomb_representante}"
-								class="form-control" placeholder="Representante Legal"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('nomb_representante')}"
-								th:errors="*{nomb_representante}"></small>
+							<select th:field="*{estado}" class="form-control"
+								th:errorclass="'form-control alert-danger'">
+								<option
+									th:each=" state: ${T( innotech.com.sv.modelos.EstadosEnum).values() }"
+									th:value="${state}" th:text="${state}"></option>
+							</select>
 						</div>
 					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Moneda</label>
-						<div class="col-sm-10">
-								<select th:field="*{moneda}" class="form-control" th:errorclass="'form-control alert-danger'"  >
-								
-								<option th:each="Item : ${moneda}" 
-									    th:value="${Item.id}"
-										th:text="${Item.descripcion}" 
-										th:selected="false" />		
-																	 
-								</select>																						
-								<smallclass="form-text text-danger"
-								th:if="${#fields.hasErrors('moneda')}"
-								th:errors="*{moneda}"></small>
-						</div>
-					</div>
- -->
 
 					<div>
-						<input type="submit" value="Crear Empresa" class="btn btn-primary" />
+						<input type="submit" value="Crear Servicio" class="btn btn-primary" />
 
 					</div>
 				</form>

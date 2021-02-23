@@ -12,50 +12,32 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">ID</label> <label
 							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${servicio.id}"></label>
+							th:text="${datos.id}"></label>
 					</div>
 
 					<div class="form-group row ">
 						<label class="col-sm-2 col-form-label">NOMBRE EMPRESA</label> <label
 							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${servicio.empresa.nombre}"></label>
-					</div>
-
-					<div class="form-group row ">
-						<label class="col-sm-2 col-form-label">CLASE SERVICIO</label> <label
-							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${servicio.claseServicio.nombre}"></label>
+							th:text="${datos.empresa.nombre}"></label>
 					</div>
 
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">NOMBRE SERVICIO</label> <label
 							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${servicio.nombre}"></label>
+							th:text="${datos.nombre}"></label>
 					</div>
 
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">DESCRIPCION
 							SERVICIO</label> <label
 							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${servicio.descripcion}"></label>
+							th:text="${datos.descripcion}"></label>
 					</div>
-
-					<!--	<div class="form-group row">
-						<label class="col-sm-2 col-form-label">PRECIO</label> <label
-							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${datos.precioUnitario}"></label>
-					</div>
-				 
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">DESCUENTO</label> <label
-							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${datos.promocion}"></label>
-					</div>
-    				-->
+			
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">ESTADO</label> <label
 							class="col-sm-6 col-form-label text-white bg-dark"
-							th:text="${servicio.estado}"></label>
+							th:text="${datos.estado}"></label>
 					</div>
 
 				</ul>

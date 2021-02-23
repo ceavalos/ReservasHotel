@@ -42,8 +42,8 @@ public class ServicioExcelExporter {
         createCell(row, 1, "Nombre Servicio ", style);       
         createCell(row, 2, "Descripcion", style);    
         createCell(row, 3, "Precio Unitario", style);
-        createCell(row, 4, "Promocion", style);
-        createCell(row, 5, "Estado", style);
+       // createCell(row, 4, "Promocion", style);
+        createCell(row, 4, "Estado", style);
          
     }
      
@@ -78,7 +78,7 @@ public class ServicioExcelExporter {
             createCell(row, columnCount++, user.getNombre(), style);
             createCell(row, columnCount++, user.getDescripcion(), style);
             createCell(row, columnCount++, user.getPrecioUnitario(), style);
-            createCell(row, columnCount++, user.getPromocion(), style);
+            //createCell(row, columnCount++, user.getPromocion(), style);
             createCell(row, columnCount++, user.getEstado().toString(), style);
         }
     }

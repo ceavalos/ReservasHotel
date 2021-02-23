@@ -16,8 +16,8 @@
 			<div class="card-body" >
 
 				<h4 class= "card-title">
-				 <a th:href="@{/servicio/form}" class= "btn btn-primary btn-xs" >Crear Servicio</a>
-				 <a class="btn btn-success btn-xs float-right" th:href="@{'/servicio/export/excel'}">XLS</a>
+				 <a th:href="@{/claseservicio/form}" class= "btn btn-primary btn-xs" >Crear Servicio</a>
+				<!--  <a class="btn btn-success btn-xs float-right" th:href="@{'/servicio/export/excel'}">XLS</a> -->
 				</h4>
 			
 				<table class="table table-striped ">
@@ -26,31 +26,23 @@
 							<th>ID</th>
 							<th>EMPRESA</th>
 							<th>SERVICIO</th>
-							<th>DESCRIPCION</th>
-							<th>PRECIO</th>
-							 <th>CLASE SERVICIO</th> 
+							<th>DESCRIPCION</th>							
+							<!-- <th>DESCUENTO</th> -->
 							<th>ESTADO</th>															
 							<th>EDITAR</th>
 					        <th>ELIMINAR</th>
 						</tr>
 					</thead>
 					<tbody>
-					 	<tr th:each="data: ${servicio}">							
-							<td> <a class="btn btn-primary btn-xs bg" th:href="@{/servicio/ver/} + ${data.id}" th:text="${data.id}"> </a>   </td>
+					 	<tr th:each="data: ${claseservicio}">							
+							<td> <a class="btn btn-primary btn-xs bg" th:href="@{/claseservicio/ver/} + ${data.id}" th:text="${data.id}"> </a>   </td>
 							<td  th:text="${data.getEmpresa.getNombre()}"></td>
 							<td  th:text="${data.getNombre()}"></td>
-							<td  th:text="${data.getDescripcion()}"></td>
-							<td  th:text="${data.getPrecioUnitario()}"></td>
-							<td  th:text="${data.claseServicio.nombre}"></td>
-							<!-- <td>
-						 	   <th:block th:if="${data.promocion != null}" th:text="${data.promocion.descripcion}"></th:block>
-                               <th:block th:unless="${data.promocion}"></th:block>
-						 	</td> -->
-							<td  th:text="${data.estado}"></td>													
-							<td><a class="btn btn-primary btn-xs" th:href="@{/servicio/form/} + ${data.id}" th:text="'EDITAR'" ></a></td>
-					        <td><a class="btn btn-danger btn-xs" th:href="@{/servicio/eliminar/} + ${data.id}" th:text="'ELIMINAR'"					      
+							<td  th:text="${data.getDescripcion()}"></td>							
+							<td  th:text="${data.estado}"></td>	
+							<td><a class="btn btn-primary btn-xs" th:href="@{/claseservicio/form/} + ${data.id}" th:text="'EDITAR'" ></a></td>
+					        <td><a class="btn btn-danger btn-xs" th:href="@{/claseservicio/eliminar/} + ${data.id}" th:text="'ELIMINAR'"					      
 					        onclick="     return confirm('Estas seguro que quieres eliminar?');"  ></a></td> 
-					   
 						</tr>
 					</tbody>
 				</table>
