@@ -52,9 +52,17 @@ public class CargosAdicionalesImp implements ICargosAdicionales {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<CargosAdicionales> findByEmpresa(Empresa empresa) {
 		// TODO Auto-generated method stub
 		return cargosAdicionalesDao.findByEmpresa(empresa);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<CargosAdicionales> findByEmpresa(Empresa empresa, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return cargosAdicionalesDao.findAllByEmpresa(empresa, pageable);
 	}
 
 }

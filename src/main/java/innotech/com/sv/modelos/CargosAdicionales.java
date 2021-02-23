@@ -46,17 +46,44 @@ public class CargosAdicionales implements Serializable {
     @NotNull
 	private Reserva reserva;
 	
-	private String estadoCargoAdicional;
+	private EstadosEnum estado;
 	
 	private String recurrente;
+	
+	private Servicio servicio;
 	
 	private int cantidad;
 	
 	private double precioUnitario;
 	
-	private int descuento;
+	private Promocion descuento;
 	
 	private long total;
+	
+	
+	public Servicio getServicio() {
+		return servicio;
+	}
+
+	public void setServicio(Servicio servicio) {
+		this.servicio = servicio;
+	}
+
+	public EstadosEnum getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadosEnum estadoCargoAdicional) {
+		this.estado = estadoCargoAdicional;
+	}
+
+	public Promocion getDescuento() {
+		return descuento;
+	}
+
+	public void setDescuento(Promocion descuento) {
+		this.descuento = descuento;
+	}
 
 	public long getId() {
 		return id;
@@ -90,13 +117,7 @@ public class CargosAdicionales implements Serializable {
 		this.reserva = reserva;
 	}
 
-	public String getEstadoCargoAdicional() {
-		return estadoCargoAdicional;
-	}
 
-	public void setEstadoCargoAdicional(String estadoCargoAdicional) {
-		this.estadoCargoAdicional = estadoCargoAdicional;
-	}
 
 	public String getRecurrente() {
 		return recurrente;
@@ -122,13 +143,7 @@ public class CargosAdicionales implements Serializable {
 		this.precioUnitario = precioUnitario;
 	}
 
-	public int getDescuento() {
-		return descuento;
-	}
 
-	public void setDescuento(int descuento) {
-		this.descuento = descuento;
-	}
 
 	public long getTotal() {
 		return total;

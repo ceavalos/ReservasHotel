@@ -20,4 +20,6 @@ public interface ICargosAdicionales {
 	public void delete(Long id);
 	
 	public List<CargosAdicionales> findByEmpresa(Empresa empresa);
+	
+	public Page<CargosAdicionales> findByEmpresa(Empresa empresa, Pageable pageable);
 }
