@@ -46,17 +46,19 @@ public class CargosAdicionales implements Serializable {
     @NotNull
 	private Reserva reserva;
 	
-	private EstadosEnum estado;
+	private EstadoCargoAdicionalEnum estado;
 	
 	private String recurrente;
 	
+	@ManyToOne
+	@NotNull
 	private Servicio servicio;
 	
 	private int cantidad;
 	
 	private double precioUnitario;
 	
-	private Promocion descuento;
+	private Promocion descuento=null;
 	
 	private long total;
 	
@@ -69,11 +71,11 @@ public class CargosAdicionales implements Serializable {
 		this.servicio = servicio;
 	}
 
-	public EstadosEnum getEstado() {
+	public EstadoCargoAdicionalEnum getEstado() {
 		return estado;
 	}
 
-	public void setEstado(EstadosEnum estadoCargoAdicional) {
+	public void setEstado(EstadoCargoAdicionalEnum estadoCargoAdicional) {
 		this.estado = estadoCargoAdicional;
 	}
 

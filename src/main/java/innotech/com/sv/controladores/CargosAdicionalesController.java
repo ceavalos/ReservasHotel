@@ -34,7 +34,7 @@ import innotech.com.sv.servicios.CargosAdicionalesImp;
 import innotech.com.sv.servicios.OcupacionImp;
 
 @Controller
-@SessionAttributes({"cargosadicionales","empresatipos","ocupaciones"})
+@SessionAttributes({"cargosadicionales","empresatipos","ocupaciones","reserva"})
 @RequestMapping("/cargosadicionales")
 public class CargosAdicionalesController {
 	
@@ -77,8 +77,9 @@ public class CargosAdicionalesController {
 		modelo.addAttribute("mensaje", mensaje);	
 		modelo.addAttribute("titulo", "Listado de Cargos Adicionales");
 		modelo.addAttribute("cargosadicionales", cargosadicionales);		
-		modelo.addAttribute("empresatipos", mieempresa);
+		modelo.addAttribute("empresatipos", mieempresa);		
 		modelo.addAttribute("ocupaciones", ocupaciones);
+		modelo.addAttribute("reserva", ocupaciones);
 		modelo.addAttribute("page", pageRender);
 		
 		return "cargosadicionales/listar";
@@ -90,6 +91,7 @@ public class CargosAdicionalesController {
 		//---
 		modelo.addAttribute("titulo","Creación de Cargos Adicionales");	
 		modelo.addAttribute("cargosadicionales",cargos);
+		//modelo.addAttribute("reserva", mieempresa);
 		
 		return "cargosadicionales/form";
 	};

@@ -15,5 +15,7 @@ public interface OcupacionDao  extends PagingAndSortingRepository<Ocupacion, Lon
 	
 	@Query(value = "select * from ocupaciones p where p.empresa_id= ?1  and p.estado = 0 ", nativeQuery = true) 
 	public Page<Ocupacion> findAllByEmpresa(long empresa, Pageable pageable ); 
+	
+	
 		
 }

@@ -28,11 +28,11 @@
 							<th>ID</th>
 							<th>EMPRESA</th>
 							<th>RESERVA</th>
+							<th>CLIENTE</th>
+							<th>HABITACION</th>
 							<th>ESTADO</th>
 							<th>SERVICIO</th>
 							<th>CANTIDAD</th>
-							<th>PRECIO UNITARIO</th>				
-							<th>TOTAL</th>
 							<th>EDITAR</th>
 							<th>ELIMINAR</th>		 					
 						</tr>
@@ -41,15 +41,18 @@
 					  
 						<tr th:each="dato: ${cargosadicionales}">							
 							<td> <a class="btn btn-primary btn-xs bg" th:href="@{/cargosadicionales/ver/} + ${dato.id}" th:text="${dato.id}"> </a>   </td>
-						<!--	<td th:text="${dato.empresa.nombre}"></td>						 	
-							<td th:text="${dato.codigo}"></td>
-						     <td th:text="${dato.estado}"></td>
-							<td th:text="${dato.tipohabitacion.descripcion}"></td>
+							<td th:text="${dato.empresa.nombre}"></td>						 	
+							<td th:text="${dato.reserva.id}"></td>
+							<td th:text="${dato.reserva.cliente.nombredui}"></td>
+							<td th:text="${dato.reserva.habitacion.codigo}"></td>
+							<td th:text="${dato.estado}"></td>
+							<td th:text="${dato.servicio.descripcion}"></td>
+							<td th:text="${dato.cantidad}"></td>
 							<td><a class="btn btn-primary btn-xs" th:href="@{/cargosadicionales/form/} + ${dato.id}" th:text="'EDITAR'" ></a></td>
 					        <td><a class="btn btn-danger btn-xs" th:href="@{/cargosadicionales/eliminar/} + ${dato.id}" th:text="'ELIMINAR'"					      
 					        onclick="     return confirm('Estas seguro que quieres eliminar?');"  ></a></td>  						 					
 					</tbody>
-					 -->
+
 				</table>
 			     <nav th:replace="layout/paginator-nav :: paginator"></nav>
 			</div>

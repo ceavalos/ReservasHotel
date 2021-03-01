@@ -13,32 +13,57 @@
 						<label class="col-sm-2 col-form-label">ID</label> <label
 							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.id}"></label>
 					</div>
-<!-- 
+
 					<div class="form-group row ">
 						<label class="col-sm-2 col-form-label">NOMBRE EMPRESA</label> <label
 							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.empresa.nombre}"></label>
 					</div>
 
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">DESCRIPCION</label> <label
-							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.descripcion}"></label>
+						<label class="col-sm-2 col-form-label">CLIENTE</label> <label
+							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.reserva.cliente.nombredui}"></label>
+					</div>
+				 	
+				 	<div class="form-group row">
+						<label class="col-sm-2 col-form-label">PERIODO RESERVA</label> <label
+							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.reserva.periodoreserva}"></label>
 					</div>
 					
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">FEHCA INICIAL</label> <label
-							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.fechainicio}"></label>
+							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.reserva.fechaInicio}"></label>
 					</div>
 					
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">FECHA FINAL</label> <label
-							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.fechafin}"></label>
+							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.reserva.fechaFin}"></label>
 					</div>
 					
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">PORC DESCUENTO</label> <label
-							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.porcdescuento}"></label>
+						<label class="col-sm-2 col-form-label">DIAS OCUPACION</label> <label
+							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.reserva.diasOcupacion}"></label>
 					</div>
- -->
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">PROMOCION </label> <label
+							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.reserva.promocionvigente}"></label>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">TOTAL RESERVA CON DESCUENTO </label> <label
+							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.reserva.montoReservaConDescuento}"></label>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">RECURRENTE</label> <label
+							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.reserva.recurrente}"></label>
+					</div>
+					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">DEPOSITO</label> <label
+							class="col-sm-6 col-form-label text-white bg-dark" th:text="${datos.reserva.montoDeposito}"></label>
+					</div>
+					
 				</ul>
 			</div>
 		</div>
