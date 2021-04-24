@@ -9,7 +9,7 @@
 		<version>2.4.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>innotech.com.hoteles</groupId>
+	<groupId>innotech.com.hoteles</groupId>f
 	<artifactId>AdministraHotel</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>AdministraHotel</name>
@@ -78,6 +78,12 @@
 			<version>6.16.0</version>
 		</dependency>
 
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        
 
 		<!-- https://mvnrepository.com/artifact/org.webjars.npm/sweetalert2 -->
 		<dependency>

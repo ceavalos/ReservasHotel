@@ -1,5 +1,6 @@
 package innotech.com.sv.controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -26,15 +27,19 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import innotech.com.sv.ProcesosServices.ReservaImp;
 import innotech.com.sv.modelos.CargosAdicionales;
+import innotech.com.sv.modelos.ClaseServicio;
 import innotech.com.sv.modelos.Empresa;
+import innotech.com.sv.modelos.Habitacion;
 import innotech.com.sv.modelos.Ocupacion;
+import innotech.com.sv.modelos.TiposHabitacion;
+import innotech.com.sv.modelosDao.ClaseServicioDao;
 import innotech.com.sv.paginator.PageRender;
 import innotech.com.sv.servicios.ActivoImp;
 import innotech.com.sv.servicios.CargosAdicionalesImp;
 import innotech.com.sv.servicios.OcupacionImp;
 
 @Controller
-@SessionAttributes({"cargosadicionales","empresatipos","ocupaciones","reserva"})
+@SessionAttributes({"cargosadicionales","empresatipos","ocupaciones","reserva","habitacion","claseservicio"})
 @RequestMapping("/cargosadicionales")
 public class CargosAdicionalesController {
 	
@@ -53,6 +58,9 @@ public class CargosAdicionalesController {
 	@Autowired
 	OcupacionImp ocupacionServImp;
 	
+	@Autowired
+	ClaseServicioDao claseservImp;
+	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model modelo,
 			HttpServletRequest request ) {
@@ -67,23 +75,60 @@ public class CargosAdicionalesController {
 		//List<CargosAdicionales> habitaciones = cargosAdicionalesimp.findByEmpresa(mieempresa);
 		
 		Page<CargosAdicionales> cargosadicionales = cargosAdicionalesimp.findByEmpresa(mieempresa, pageRequest);//   findAllByEmpresa(mieempresa, pageRequest);
-		
+		//
 		
 		PageRender<CargosAdicionales> pageRender = new PageRender<>("/cargosadicionales/listar", cargosadicionales, elemento);
 		//		
-		List<Ocupacion> ocupaciones = ocupacionServImp.findByEmpresa(mieempresa);
-		
+		List<Ocupacion> Ocupacion = ocupacionServImp.findByEmpresa(mieempresa);
+		//
+		List<Habitacion> habitaciones = new ArrayList<Habitacion>();
+		//
+		for(Ocupacion hab: Ocupacion) {
+			habitaciones.add(hab.getReserva().getHabitacion());
+		}
+		//
+		List<ClaseServicio>  claseServicio = claseservImp.findByEmpresa(mieempresa);
+		for(ClaseServicio temp :claseServicio ) {
+			System.out.println(temp.getDescripcion());
+		};
 		//
 		modelo.addAttribute("mensaje", mensaje);	
 		modelo.addAttribute("titulo", "Listado de Cargos Adicionales");
 		modelo.addAttribute("cargosadicionales", cargosadicionales);		
 		modelo.addAttribute("empresatipos", mieempresa);		
-		modelo.addAttribute("ocupaciones", ocupaciones);
-		modelo.addAttribute("reserva", ocupaciones);
+		modelo.addAttribute("ocupaciones", Ocupacion);
+		modelo.addAttribute("reserva", Ocupacion);
 		modelo.addAttribute("page", pageRender);
+		modelo.addAttribute("habitacion",habitaciones );
+		modelo.addAttribute("claseservicio", claseServicio);
 		
 		return "cargosadicionales/listar";
 	}
+	
+	//@GetMapping(value="/ajax/habitaciones/{tipohabitacion}") 
+		@RequestMapping(value="/ajaxservicio")
+		public String ajaxBrands(@RequestParam("tipohabitacion") long tipo, Model modelo, HttpServletRequest request) {
+			//long tipo = (long) 1;
+			System.out.println("Mensaje desde /ajax/habitaciones");
+			
+			HttpSession misession= request.getSession(true);		 
+			mieempresa = (Empresa) misession.getAttribute("empresaCart");
+			
+		/*	TiposHabitacion tipohabitacion = tipoHabitacionServImp.findById(tipo); 
+			
+			List<Habitacion> habitacion = habitacionServImp.findAllByEmpresaAndTipohabitacion(mieempresa, tipohabitacion) ;
+			
+			for (Habitacion habita: habitacion) {
+				System.out.println("Desde Controller --> "+habita.getTipohabitacion().getId());
+			}
+			
+			modelo.addAttribute("habitaciones",habitacion);
+			*/
+			//return "redirect:reserva/form";
+			return "cargosadicionales/form :: cargoservicio";
+			//return "redirect:/reserva/listar";
+		}
+		
 	
 	@RequestMapping(value="/form") 
 	public String form (Model modelo) {	

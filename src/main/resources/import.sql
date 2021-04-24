@@ -2,8 +2,8 @@ INSERT INTO monedas (codigo, descripcion)  VALUES ('Usd$', 'Dollar Estado Uniden
 INSERT INTO monedas (codigo, descripcion)  VALUES ('Mx', 'Peso Mexicano');
 INSERT INTO monedas (codigo, descripcion)  VALUES ('Slv', 'Colon Salvadoreño');
 
-INSERT INTO empresas (nombre, direccion, nit, nrc, nomb_representante, moneda_id)  VALUES ('FUDEM',    'Colonia Escalon',  '0715-12141975-101', '123-56', 'PEPE TORO',1);
-INSERT INTO empresas (nombre, direccion, nit, nrc, nomb_representante, moneda_id)  VALUES ('GALAXIA',   'Colonia Escalon', '0715-12141975',     '123-56', 'LA MUJER MARAVILLA',1);
+INSERT INTO empresas (nombre, direccion, nit, nrc, nomb_representante, moneda_id)  VALUES ('LAS PALMAS',    'Colonia Escalon',  '0715-12141975-101', '123-56', 'PEPE TORO',1);
+INSERT INTO empresas (nombre, direccion, nit, nrc, nomb_representante, moneda_id)  VALUES ('SURF CITY',   'Colonia Escalon', '0715-12141975',     '123-56', 'LA MUJER MARAVILLA',1);
 INSERT INTO empresas (nombre, direccion, nit, nrc, nomb_representante, moneda_id)  VALUES ('INNOVACION', 'Colonia Escalon', '0715-12141975',     '123-56', 'EL GIGANTE',2);
 INSERT INTO empresas (nombre, direccion, nit, nrc, nomb_representante, moneda_id)  VALUES ('UCA', 'Colonia Escalon', '0715-12141975',     '123-56', 'EL GIGANTE',3);
 
