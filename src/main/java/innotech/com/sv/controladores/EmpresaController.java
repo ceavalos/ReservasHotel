@@ -59,7 +59,8 @@ public class EmpresaController {
 		
 		int elemento = Integer.parseInt(this.elementos);  
 		
-		Pageable  pageRequest =  PageRequest.of(page, elemento);
+		//Pageable  pageRequest =  PageRequest.of(page, elemento);
+		PageRequest  pageRequest =  PageRequest.of(page, elemento);
 		Page<Empresa> empresas = empresaServ.findAll(pageRequest);
 		
 		PageRender<Empresa> pageRender = new PageRender<>("/empresa/listar", empresas, elemento) ;

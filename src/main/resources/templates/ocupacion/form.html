@@ -1,14 +1,15 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="layout/layout :: head">
-</head>
 <body>
 
 	<header th:replace="layout/layout :: header"> </header>
 
-	<div class="container py-4">
-		<div class="card bg-light">
+	<div class="container-fluid  py-4">	 	
+	   <div class="card bg-light">
 
-			<h1 th:text="${titulo}"
+		<h1 th:text="${titulo}"
 				class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h1>
 
 			<div th:object="${promocion}" th:remove="tag">
@@ -101,9 +102,14 @@
 					</div>
 				</form>
 			</div>
-		</div>
+				
+	   </div> 
 	</div>
-	<footer th:replace="layout/layout :: footer"></footer>
 
 </body>
+
+
 </html>
+
+
+
