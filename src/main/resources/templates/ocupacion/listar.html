@@ -32,7 +32,8 @@
 							<th>HABITACION</th>
 							<th>PERIODO RESERVA</th>
 							<th>FECHA INICIO</th>
-							<th>FECHA FIN</th>							
+							<th>FECHA FIN</th>	
+							<th>EXTRA CARGO</th>						
 							<th>RECURRENTE</th>								
 						    <th>CHECK OUT</th>						
 						</tr>
@@ -47,6 +48,7 @@
 							<td th:text="${dato.reserva.periodoreserva}"></td>
 							<td th:text="${dato.reserva.fechaInicio}"></td>
 							<td th:text="${dato.reserva.fechaFin}"></td>
+							<td><a class="btn btn-primary btn-xs" th:href="@{/cargosadicionales/crear/} + ${dato.id}" th:text="'Adcionar'" ></a></td>
 							<td th:text="${dato.reserva.recurrente}"></td>
 							<td><a class="btn btn-primary btn-xs" th:href="@{/promocion/form/} + ${dato.id}" th:text="'salida'" ></a></td>					        
 						</tr>

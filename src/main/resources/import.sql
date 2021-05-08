@@ -80,4 +80,4 @@ INSERT INTO SERVICIOS  (DESCRIPCION, ESTADO, NOMBRE, PRECIO_UNITARIO, EMPRESA_ID
 
 INSERT INTO ocupaciones (empresa_id, reserva_id, estado, fecha_inicio_ocupacion, fecha_fin_ocupacion) values(1, 1, 0, '2021-03-01', '2021-03-04');
 
-INSERT INTO cargosadicionales (empresa_id, reserva_id, cantidad, estado, servicio_id,precio_unitario, recurrente,  total) values(1, 1, 1, 0, 1, 10, 'N', 10 );
+INSERT INTO cargosadicionales (empresa_id, ocupacion_id, cantidad, estado, claseservicio_id, servicio_id, precio_unitario, recurrente, total ) values(1, 1, 1, 0, 1, 1, 10, 'N',10);

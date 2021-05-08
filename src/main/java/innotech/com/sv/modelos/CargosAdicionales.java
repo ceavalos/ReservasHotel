@@ -9,12 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import innotech.com.sv.ProcesosServices.Miscelaneos;
 
 @Entity
 @Table(name = "cargosadicionales")
@@ -36,6 +39,7 @@ public class CargosAdicionales implements Serializable {
 	@PrePersist
 	public void preinsert() {
 		this.fecha_ins = new Date();
+		actualizatotal();		
 	}
 	
 	@ManyToOne
@@ -44,11 +48,15 @@ public class CargosAdicionales implements Serializable {
 	
 	@ManyToOne
     @NotNull
-	private Reserva reserva;
+	private Ocupacion ocupacion;
 	
 	private EstadoCargoAdicionalEnum estado;
 	
 	private String recurrente;
+	
+	@ManyToOne
+	@NotNull
+	private ClaseServicio claseservicio;
 	
 	@ManyToOne
 	@NotNull
@@ -58,10 +66,21 @@ public class CargosAdicionales implements Serializable {
 	
 	private double precioUnitario;
 	
-	private Promocion descuento=null;
+	@ManyToOne
+	private Promocion descuento;
 	
 	private long total;
 	
+	@PreUpdate
+	public void update() {		
+		actualizatotal();
+	}
+	
+	//Procedimiento para insertar el total de la reserva
+		public void actualizatotal() {
+			this.total = (long) (this.total * this.precioUnitario);
+		};
+		
 	
 	public Servicio getServicio() {
 		return servicio;
@@ -111,15 +130,13 @@ public class CargosAdicionales implements Serializable {
 		this.empresa = empresa;
 	}
 
-	public Reserva getReserva() {
-		return reserva;
+	public Ocupacion getOcupacion() {
+		return ocupacion;
 	}
 
-	public void setReserva(Reserva reserva) {
-		this.reserva = reserva;
+	public void setOcupacion(Ocupacion ocupacion) {
+		this.ocupacion = ocupacion;
 	}
-
-
 
 	public String getRecurrente() {
 		return recurrente;
@@ -146,13 +163,20 @@ public class CargosAdicionales implements Serializable {
 	}
 
 
-
 	public long getTotal() {
 		return total;
 	}
 
 	public void setTotal(long total) {
 		this.total = total;
+	}
+
+	public ClaseServicio getClaseservicio() {
+		return claseservicio;
+	}
+
+	public void setClaseservicio(ClaseServicio claseservicio) {
+		this.claseservicio = claseservicio;
 	}
 	
 	

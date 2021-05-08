@@ -29,6 +29,7 @@ import innotech.com.sv.ProcesosServices.ReservaImp;
 import innotech.com.sv.modelos.CargosAdicionales;
 import innotech.com.sv.modelos.ClaseServicio;
 import innotech.com.sv.modelos.Empresa;
+import innotech.com.sv.modelos.EstadoCargoAdicionalEnum;
 import innotech.com.sv.modelos.Habitacion;
 import innotech.com.sv.modelos.Ocupacion;
 import innotech.com.sv.modelos.TiposHabitacion;
@@ -36,6 +37,7 @@ import innotech.com.sv.modelosDao.ClaseServicioDao;
 import innotech.com.sv.paginator.PageRender;
 import innotech.com.sv.servicios.ActivoImp;
 import innotech.com.sv.servicios.CargosAdicionalesImp;
+import innotech.com.sv.servicios.IOcupacion;
 import innotech.com.sv.servicios.OcupacionImp;
 
 @Controller
@@ -56,7 +58,7 @@ public class CargosAdicionalesController {
 	CargosAdicionalesImp cargosAdicionalesimp;
 	
 	@Autowired
-	OcupacionImp ocupacionServImp;
+	IOcupacion ocupacionServImp;
 	
 	@Autowired
 	ClaseServicioDao claseservImp;
@@ -160,6 +162,30 @@ public class CargosAdicionalesController {
 		}
 	};
 	
+	@RequestMapping(value="/crear/{id}")
+	public String crear(@PathVariable(value="id") Long id, Map<String, Object> model, 
+			            RedirectAttributes flash, Model modelo, HttpServletRequest request) {
+				
+		CargosAdicionales cargos  = new CargosAdicionales();
+             //		
+		HttpSession misession= request.getSession(true);		 
+		mieempresa = (Empresa) misession.getAttribute("empresaCart");
+		//
+		Ocupacion ocupacion = ocupacionServImp.findById(id) ;
+		
+		cargos.setOcupacion(ocupacion);
+		cargos.setEmpresa(mieempresa);
+		cargos.setEstado(EstadoCargoAdicionalEnum.Pendiente);
+		cargos.setRecurrente("N");
+		System.out.println(cargos.getOcupacion().getReserva().getHabitacion().getCodigo());
+		//---
+		modelo.addAttribute("titulo","Creación de Cargos Adicionales");	
+		modelo.addAttribute("cargosadicionales",cargos);
+		//modelo.addAttribute("reserva", mieempresa);
+		
+		return "cargosadicionales/form";
+				
+	}
 
 	
 	@RequestMapping(value="/form/{id}")

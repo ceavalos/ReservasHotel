@@ -18,7 +18,7 @@
 			<div class="card-body" >
 
 				<h4 class= "card-title">
-				 <a th:href="@{/cargosadicionales/form}" class= "btn btn-primary btn-xs" >Crear Cargo Adicional</a>
+				<!--  <a th:href="@{/cargosadicionales/form}" class= "btn btn-primary btn-xs" >Crear Cargo Adicional</a> -->
 				 <!-- <a class="btn btn-success btn-xs float-right" th:href="@{'/promocion/export/excel'}">XLS</a> -->
 				</h4>
 				
@@ -27,14 +27,13 @@
 						<tr>
 							<th>ID</th>
 							<th>EMPRESA</th>
-							<th>RESERVA</th>
+							<th>OCUPACION</th>
 							<th>CLIENTE</th>
 							<th>HABITACION</th>
 							<th>ESTADO</th>
 							<th>SERVICIO</th>
-							<th>CANTIDAD</th>
-							<th>EDITAR</th>
-							<th>ELIMINAR</th>		 					
+							<th>CANTIDAD</th>							
+							<th>CANCELAR</th>		 					
 						</tr>
 					</thead>
 					<tbody>
@@ -42,15 +41,15 @@
 						<tr th:each="dato: ${cargosadicionales}">							
 							<td> <a class="btn btn-primary btn-xs bg" th:href="@{/cargosadicionales/ver/} + ${dato.id}" th:text="${dato.id}"> </a>   </td>
 							<td th:text="${dato.empresa.nombre}"></td>						 	
-							<td th:text="${dato.reserva.id}"></td>
-							<td th:text="${dato.reserva.cliente.nombredui}"></td>
-							<td th:text="${dato.reserva.habitacion.codigo}"></td>
+							<td th:text="${dato.id}"></td>
+							<td th:text="${dato.ocupacion.reserva.cliente.nombredui}"></td>
+							<td th:text="${dato.ocupacion.reserva.habitacion.codigo}"></td>
 							<td th:text="${dato.estado}"></td>
 							<td th:text="${dato.servicio.descripcion}"></td>
 							<td th:text="${dato.cantidad}"></td>
-							<td><a class="btn btn-primary btn-xs" th:href="@{/cargosadicionales/form/} + ${dato.id}" th:text="'EDITAR'" ></a></td>
-					        <td><a class="btn btn-danger btn-xs" th:href="@{/cargosadicionales/eliminar/} + ${dato.id}" th:text="'ELIMINAR'"					      
-					        onclick="     return confirm('Estas seguro que quieres eliminar?');"  ></a></td>  						 					
+							<!-- <td><a class="btn btn-primary btn-xs" th:href="@{/cargosadicionales/form/} + ${dato.id}" th:text="'EDITAR'" ></a></td> -->
+					        <td><a class="btn btn-danger btn-xs" th:href="@{/cargosadicionales/eliminar/} + ${dato.id}" th:text="'DESHABILITAR'"					      
+					        onclick="     return confirm('Estas seguro que quieres deshabilitar este cargo?');"  ></a></td>  						 					
 					</tbody>
 
 				</table>
