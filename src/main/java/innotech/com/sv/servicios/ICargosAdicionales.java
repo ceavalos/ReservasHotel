@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import innotech.com.sv.modelos.CargosAdicionales;
 import innotech.com.sv.modelos.Empresa;
+import innotech.com.sv.modelos.Servicio;
 
 public interface ICargosAdicionales {
 	public List<CargosAdicionales> findAll();
@@ -22,4 +23,6 @@ public interface ICargosAdicionales {
 	public List<CargosAdicionales> findByEmpresa(Empresa empresa);
 	
 	public Page<CargosAdicionales> findByEmpresa(Empresa empresa, Pageable pageable);
+	
+	public List<Servicio> findByTermino(String term);
 }

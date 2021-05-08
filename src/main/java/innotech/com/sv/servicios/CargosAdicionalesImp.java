@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import innotech.com.sv.modelos.CargosAdicionales;
 import innotech.com.sv.modelos.Empresa;
+import innotech.com.sv.modelos.Servicio;
 import innotech.com.sv.modelosDao.CargosAdicionalesDao;
 
 @Service
@@ -19,6 +20,8 @@ public class CargosAdicionalesImp implements ICargosAdicionales {
 	@Autowired
 	CargosAdicionalesDao cargosAdicionalesDao;
 	
+	@Autowired
+	IServicio servicioImp;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -54,15 +57,19 @@ public class CargosAdicionalesImp implements ICargosAdicionales {
 	@Override
 	@Transactional(readOnly = true)
 	public List<CargosAdicionales> findByEmpresa(Empresa empresa) {
-		// TODO Auto-generated method stub
 		return cargosAdicionalesDao.findByEmpresa(empresa);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Page<CargosAdicionales> findByEmpresa(Empresa empresa, Pageable pageable) {
-		// TODO Auto-generated method stub
 		return cargosAdicionalesDao.findAllByEmpresa(empresa, pageable);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Servicio> findByTermino(String term) {
+		return servicioImp.findByTermino(term);
 	}
 
 }

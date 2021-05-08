@@ -63,4 +63,11 @@ public class ServicioImp implements IServicio {
 		return servicioDao.findAllByEmpresaPendientes(empresa, pageable);
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public List<Servicio> findByTermino(String term) {
+		// TODO Auto-generated method stub
+		return servicioDao.findByNombre(term);
+	}
+
 }

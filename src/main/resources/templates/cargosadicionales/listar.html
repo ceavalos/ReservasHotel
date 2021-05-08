@@ -36,8 +36,7 @@
 							<th>CANCELAR</th>		 					
 						</tr>
 					</thead>
-					<tbody>
-					  
+					<tbody>					  
 						<tr th:each="dato: ${cargosadicionales}">							
 							<td> <a class="btn btn-primary btn-xs bg" th:href="@{/cargosadicionales/ver/} + ${dato.id}" th:text="${dato.id}"> </a>   </td>
 							<td th:text="${dato.empresa.nombre}"></td>						 	

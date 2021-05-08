@@ -16,4 +16,7 @@ public interface ServicioDao  extends PagingAndSortingRepository<Servicio, Long>
 	   //solo reservas pendientes y cuya fecha de finazacion de la misma aun no se halla alcanzado
 		@Query(value ="select * from servicios p where p.empresa_id= ?1 and p.estado=0", nativeQuery = true )
 		public Page<Servicio> findAllByEmpresaPendientes(long empresa, Pageable pageable);
+		
+		@Query(value ="select * from servicios p where p.nombre like %?1% and p.estado=0", nativeQuery = true )
+		 public List<Servicio> findByNombre(String term);
 }
