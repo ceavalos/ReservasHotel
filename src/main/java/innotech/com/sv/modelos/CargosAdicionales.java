@@ -67,7 +67,7 @@ public class CargosAdicionales implements Serializable {
 	private double precioUnitario;
 	
 	@ManyToOne
-	private Promocion descuento;
+	private Promocion promocion;
 	
 	private long total;
 	
@@ -78,7 +78,7 @@ public class CargosAdicionales implements Serializable {
 	
 	//Procedimiento para insertar el total de la reserva
 		public void actualizatotal() {
-			this.total = (long) (this.total * this.precioUnitario);
+			this.total = (long) (this.cantidad * this.precioUnitario);
 		};
 		
 	
@@ -98,12 +98,12 @@ public class CargosAdicionales implements Serializable {
 		this.estado = estadoCargoAdicional;
 	}
 
-	public Promocion getDescuento() {
-		return descuento;
+	public Promocion getPromocion() {
+		return promocion;
 	}
 
-	public void setDescuento(Promocion descuento) {
-		this.descuento = descuento;
+	public void setPromociono(Promocion promocion) {
+		this.promocion = promocion;
 	}
 
 	public long getId() {

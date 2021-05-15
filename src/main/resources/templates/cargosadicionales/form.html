@@ -21,7 +21,6 @@
 				<form th:action="@{/cargosadicionales/form}"
 					th:object="${cargosadicionales}" method="post">
 
-
 					<div class="form-group row" hidden="true">
 						<label class="col-sm-2 col-form-label">Id</label>
 						<div th:if="${#fields.hasErrors('*')}">errors</div>
@@ -32,18 +31,7 @@
 								th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></small>
 						</div>
 					</div>
-					<!-- 
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">EMPRESA</label>
-						<div class="col-sm-10">
-							<select th:field="*{empresa}" class="form-control"
-								th:errorclass="'form-control alert-danger'">
-								<option th:each="Item : ${empresatipos}" th:value="${Item.id}"
-									th:text="${Item.nombre}" th:selected="false" />
-							</select>
-						</div>
-					</div>
- -->
+
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">EMPRESA</label> <label
 							class="form-text text-danger"
@@ -69,30 +57,49 @@
 					</div>
 
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">BUSCAR PRODUCTO</label>
+						<label class="col-sm-2 col-form-label">PROMOCION VIGENTE</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="buscar_producto" id="buscar_producto"
-								placeholder="Nombre del Servicio o Producto" /> 
+						 
+							<select th:field="*{promocion}" class="form-control"
+								th:errorclass="'form-control alert-danger'">
+
+								<option th:value=null th:text="---"></option>
+								<option th:each=" item: ${promocion} " th:value="${item.id}"
+									th:text="${item.descripcion}"></option>
+							</select> 
+							
 						</div>
 					</div>
 
-					<table th:replace="cargosadicionales/plantilla_items :: items_cargosadicionales"></table>
-					
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">BUSCAR PRODUCTO</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="buscar_producto"
+								id="buscar_producto"
+								placeholder="Nombre del Servicio o Producto" />
+						</div>
+					</div>
+
+					<table
+						th:replace="cargosadicionales/plantilla_items :: items_cargosadicionales"></table>
+
 					<div>
 						<input type="submit" value="Crear Cargos Adicionales"
 							class="btn btn-primary" />
 
 					</div>
-					
-					
+
+
 					<table id="cargarItemProductos"
 						class="table table-sm table-striped table-hover">
 						<thead>
 							<tr>
-							    <th>Servicios</th>
+								<th>Clase</th>
 								<th>Nombre</th>
 								<th>Precio</th>
+								<th>Promocion</th>
 								<th>Cantidad</th>
+								<th>Descuento</th>
 								<th>Total</th>
 								<th>Eliminar</th>
 							</tr>
@@ -100,150 +107,17 @@
 						<tbody>
 						</tbody>
 					</table>
-					<h5>Total <span class="badge badge-secondary" id="gran_total">0</span></h5>
-					
-					<!--								
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">CLASE SERVICIO</label>
-						<div class="col-sm-10">
-							<select th:field="*{reserva}" class="form-control"
-								th:errorclass="'form-control alert-danger'" id="claseservicio"
-								name="claseservicio">
-								<option th:each="Item : ${claseservicio}" th:value="${Item.id}"
-									th:text="${Item.descripcion}" th:selected="false" />
-							</select>
-
-						</div>
-					</div>
-	
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">SERVICIO</label>
-						<div class="col-sm-10">
-							<select th:field="*{reserva}" class="form-control"
-								th:errorclass="'form-control alert-danger'" d="servicio"
-								name="servicio">
-								<option th:fragment="cargoservicio"  th:each="Item : ${reserva}" th:value="${Item.id}"
-									th:text="${Item.reserva.habitacion.codigo}" th:selected="false" />
-							</select>
-
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">DESCUENTO</label>
-						<div class="col-sm-10">
-							<select th:field="*{reserva}" class="form-control"
-								th:errorclass="'form-control alert-danger'">
-								<option th:each="Item : ${reserva}" th:value="${Item.id}"
-									th:text="${Item.reserva.habitacion.codigo}" th:selected="false" />
-							</select>
-
-						</div>
-					</div>
-					
-					
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">CANTIDAD</label>
-						<div class="col-sm-10">
-							<select th:field="*{reserva}" class="form-control"
-								th:errorclass="'form-control alert-danger'">
-								<option th:each="Item : ${reserva}" th:value="${Item.id}"
-									th:text="${Item.reserva.habitacion.codigo}" th:selected="false" />
-							</select>
-
-						</div>
-					</div>
-					
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">TOTAL SERVICIO</label>
-						<div class="col-sm-10">
-							<select th:field="*{reserva}" class="form-control"
-								th:errorclass="'form-control alert-danger'">
-								<option th:each="Item : ${reserva}" th:value="${Item.id}"
-									th:text="${Item.reserva.habitacion.codigo}" th:selected="false" />
-							</select>
-
-						</div>
-					</div>
-					 -->
-
-					<!--
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">OCUPACION</label>
-						<div class="col-sm-10">
-
-							<select th:field="*{reserva}" class="form-control"
-								th:errorclass="'form-control alert-danger'">
-								<option
-									th:each=" reserva: ${ocupaciones}"
-									th:value="${reserva.id}"  th:text="${reserva.id} +' '+${reserva.cliente.nombredui} " ></option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">ESTADO</label>
-						<div class="col-sm-10">
-
-							<select th:field="*{estado}" class="form-control"
-								th:errorclass="'form-control alert-danger'">
-								<option
-									th:each=" state: ${T( innotech.com.sv.modelos.EstadosEnum).values() }"
-									th:value="${state}" th:text="${state}"></option>
-							</select>
-						</div>
-					</div>
-
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">CANTIDAD</label>
-						<div class="col-sm-10">
-							<input type="number" th:field="*{cantidad}" class="form-control"
-								placeholder="Cantidad"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('cantidad')}" th:errors="*{cantidad}"></small>
-						</div>
-					</div>
-
-
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">PRECIO UNITATIO</label>
-						<div class="col-sm-10">
-							<input type="number" th:field="*{precioUnitario}"
-								class="form-control" step="any" placeholder="Cantidad"
-								th:errorclass="'form-control alert-danger'" /> <small
-								class="form-text text-danger"
-								th:if="${#fields.hasErrors('precioUnitario')}"
-								th:errors="*{precioUnitario}"></small>
-						</div>
-					</div>
-
- -->
-
-					
-					<script>
-						/*<![CDATA[*/
-
-						$("#claseservicio").on(
-								"change",
-								function() {
-									url = '/cargosadicionales/ajaxservicio?'
-											+ $("#claseservicio").serialize()
-											+ '&'
-											+ $("#claseservicio").serialize()
-
-									alert(url);
-									//$("#precioreserva").load(url);				
-								});
-
-						/*]]>*/
-					</script>
-
+					<h5>
+						Total <span class="badge badge-secondary" id="gran_total">0</span>
+					</h5>
+					<button type="submit" class="btn btn-secondary">Almacenar
+						Cambios</button>
 				</form>
 			</div>
 		</div>
 	</div>
 	<footer th:replace="layout/layout :: footer"></footer>
-    <script th:replace="cargosadicionales/js/autocomplete-cargosadicionales :: cargos-javvascript"></script>
+	<script
+		th:replace="cargosadicionales/js/autocomplete-cargosadicionales :: cargos-javvascript"></script>
 </body>
 </html>

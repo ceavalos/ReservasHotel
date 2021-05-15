@@ -3,11 +3,14 @@ package innotech.com.sv.controladores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -27,21 +30,24 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import innotech.com.sv.ProcesosServices.ReservaImp;
 import innotech.com.sv.modelos.CargosAdicionales;
 import innotech.com.sv.modelos.ClaseServicio;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.EstadoCargoAdicionalEnum;
 import innotech.com.sv.modelos.Habitacion;
 import innotech.com.sv.modelos.Ocupacion;
+import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Servicio;
-import innotech.com.sv.modelos.TiposHabitacion;
-import innotech.com.sv.modelosDao.ClaseServicioDao;
 import innotech.com.sv.paginator.PageRender;
 import innotech.com.sv.servicios.ActivoImp;
 import innotech.com.sv.servicios.CargosAdicionalesImp;
+import innotech.com.sv.servicios.ICargosAdicionales;
+import innotech.com.sv.servicios.IClaseServicio;
 import innotech.com.sv.servicios.IOcupacion;
-import innotech.com.sv.servicios.OcupacionImp;
+import innotech.com.sv.servicios.IPromocion;
+import innotech.com.sv.servicios.IServicio;
+import innotech.com.sv.servicios.PromocionImp;
+
 
 @Controller
 @SessionAttributes({"cargosadicionales","empresatipos","ocupaciones","reserva","habitacion","claseservicio"})
@@ -58,13 +64,21 @@ public class CargosAdicionalesController {
 	Empresa mieempresa ;
 	
 	@Autowired
-	CargosAdicionalesImp cargosAdicionalesimp;
+	ICargosAdicionales cargosAdicionalesimp;
 	
 	@Autowired
 	IOcupacion ocupacionServImp;
 	
 	@Autowired
-	ClaseServicioDao claseservImp;
+	IClaseServicio claseservImp;
+	
+	@Autowired
+	IServicio servicioImp;
+	
+	@Autowired
+	IPromocion promocionServ;
+	
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model modelo,
@@ -110,7 +124,6 @@ public class CargosAdicionalesController {
 		return "cargosadicionales/listar";
 	}
 	
-	//@GetMapping(value="/ajax/habitaciones/{tipohabitacion}") 
 		@RequestMapping(value="/ajaxservicio")
 		public String ajaxBrands(@RequestParam("tipohabitacion") long tipo, Model modelo, HttpServletRequest request) {
 			//long tipo = (long) 1;
@@ -119,50 +132,26 @@ public class CargosAdicionalesController {
 			HttpSession misession= request.getSession(true);		 
 			mieempresa = (Empresa) misession.getAttribute("empresaCart");
 			
-		/*	TiposHabitacion tipohabitacion = tipoHabitacionServImp.findById(tipo); 
-			
-			List<Habitacion> habitacion = habitacionServImp.findAllByEmpresaAndTipohabitacion(mieempresa, tipohabitacion) ;
-			
-			for (Habitacion habita: habitacion) {
-				System.out.println("Desde Controller --> "+habita.getTipohabitacion().getId());
-			}
-			
-			modelo.addAttribute("habitaciones",habitacion);
-			*/
-			//return "redirect:reserva/form";
 			return "cargosadicionales/form :: cargoservicio";
-			//return "redirect:/reserva/listar";
+
 		}
 		
 	
 	@RequestMapping(value="/form") 
-	public String form (Model modelo) {	
+	public String form (Model modelo, HttpServletRequest request) {	
 		CargosAdicionales cargos  = new CargosAdicionales();
 		//---
+		HttpSession misession= request.getSession(true);		 
+		mieempresa = (Empresa) misession.getAttribute("empresaCart");
+		//
+		List<Promocion> promociones = promocionServ.findByEmpresa(mieempresa.getId());
+		
 		modelo.addAttribute("titulo","Creación de Cargos Adicionales");	
 		modelo.addAttribute("cargosadicionales",cargos);
+		modelo.addAttribute("promocion",promociones);
 		//modelo.addAttribute("reserva", mieempresa);
 		
 		return "cargosadicionales/form";
-	};
-	
-	
-	@RequestMapping(value="/form", method=RequestMethod.POST)
-	public String salvar (@Valid @ModelAttribute(value="cargosadicionales") CargosAdicionales cargosadicionales, BindingResult result, Model model, 
-			RedirectAttributes flash, SessionStatus status) {	
-		
-		if (result.hasErrors()) {
-			model.addAttribute("titulo","Creación de Activos");						
-			return "cargosadicionales/form";
-		} else {
-			String mensajeFlash =  ( String.valueOf(cargosadicionales.getId()) != null)? "Cargos Adicionales Editados con éxito" : " Cargos Adicionales guardados con éxito "  ;
-			cargosAdicionalesimp.save(cargosadicionales);
-			model.addAttribute("titulo","Creación de Cargos Adicionales");
-		    status.setComplete();
-		    flash.addFlashAttribute("success", mensajeFlash );
-		
-		return "redirect:/cargosadicionales/listar";
-		}
 	};
 	
 	@RequestMapping(value="/crear/{id}")
@@ -174,6 +163,8 @@ public class CargosAdicionalesController {
 		HttpSession misession= request.getSession(true);		 
 		mieempresa = (Empresa) misession.getAttribute("empresaCart");
 		//
+		List<Promocion> promociones = promocionServ.findByEmpresa(mieempresa.getId());
+		//
 		Ocupacion ocupacion = ocupacionServImp.findById(id) ;
 		
 		cargos.setOcupacion(ocupacion);
@@ -184,11 +175,66 @@ public class CargosAdicionalesController {
 		//---
 		modelo.addAttribute("titulo","Creación de Cargos Adicionales");	
 		modelo.addAttribute("cargosadicionales",cargos);
-		//modelo.addAttribute("reserva", mieempresa);
+		modelo.addAttribute("promocion",promociones);
 		
 		return "cargosadicionales/form";
 				
 	}
+
+	
+	@RequestMapping(value="/form", method=RequestMethod.POST)
+	public String salvar (@Valid @ModelAttribute(value="cargosadicionales") CargosAdicionales cargosadicionales, 
+			BindingResult result, Model model, 
+			@RequestParam(name = "item_id[]", required = false) Long[] itemId,
+			@RequestParam(name = "cantidad[]", required = false) Integer[] cantidad, 			
+			@RequestParam(name = "clase_id[]", required = false) Long[] claseId,
+			RedirectAttributes flash, SessionStatus status) {	
+		
+		if (itemId == null || itemId.length == 0) {
+			model.addAttribute("titulo", "Creación de Cargos Adicionales");
+			model.addAttribute("error", "Error: La factura NO puede ir sin líneas!");
+			return "cargosadicionales/form";
+		}
+				
+		
+		for (int i = 0; i < itemId.length; i++) {
+		
+			ClaseServicio claseserv = claseservImp.findById( claseId[i] );
+			Servicio servicio       = servicioImp.findById(itemId[i]);	
+			//
+			cargosadicionales.setClaseservicio(claseserv);
+			cargosadicionales.setServicio(servicio);
+			//
+			cargosadicionales.setPrecioUnitario(servicio.getPrecioUnitario());
+			cargosadicionales.setCantidad(cantidad[i]);
+			
+			cargosAdicionalesimp.save(cargosadicionales);
+			/*Producto producto = clienteService.findProductoById(itemId[i]);
+
+			ItemFactura linea = new ItemFactura();
+			linea.setCantidad(cantidad[i]);
+			linea.setProducto(producto);
+			factura.addItemFactura(linea);
+					*/
+			log.info("ID: " + itemId[i].toString() + " Precio Unitario "+servicio.getPrecioUnitario() +", cantidad: " + cantidad[i].toString() + " ClaseId: "+claseId[i]  );
+		}
+
+		//clienteService.saveFactura(factura);
+		status.setComplete();
+
+		flash.addFlashAttribute("success", "Cargo Adicional creado con éxito!");
+		
+		
+		/*String mensajeFlash =  ( String.valueOf(cargosadicionales.getId()) != null)? "Cargos Adicionales Editados con éxito" : " Cargos Adicionales guardados con éxito "  ;
+		cargosAdicionalesimp.save(cargosadicionales);
+		model.addAttribute("titulo","Creación de Cargos Adicionales");
+	    status.setComplete();
+	    flash.addFlashAttribute("success", mensajeFlash );
+		*/
+		return "redirect:/cargosadicionales/listar";
+		
+	};
+	
 
 	
 	@RequestMapping(value="/form/{id}")
@@ -231,6 +277,26 @@ public class CargosAdicionalesController {
 		return "redirect:/cargosadicionales/listar";
 	}
 	
+	@RequestMapping(value = "/deshabilitar/{id}")
+	public String deshabilitar(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
+		
+		CargosAdicionales cargoadicional = null;
+		
+		if (id > 0) {
+			try {
+				cargoadicional = cargosAdicionalesimp.findById(id) ;
+				cargoadicional.setEstado(EstadoCargoAdicionalEnum.Anulado);
+				cargosAdicionalesimp.save(cargoadicional);
+				flash.addFlashAttribute("success", " Cargo Adicional deshabilitado con éxito");
+				//
+			} catch (Exception e) {
+				System.out.println("error al borrar " +e.getMessage());
+				flash.addFlashAttribute("error", " Error al intentar deshabilitar Cargo Adicional "+e.getMessage());
+			}			
+		}
+		
+		return "redirect:/cargosadicionales/listar";
+	}
 	
 	  @GetMapping(value="/cargar_servicios/{term}", produces={"application/json"})
 	  public @ResponseBody List<Servicio> cargar_servicios(@PathVariable String term  ){

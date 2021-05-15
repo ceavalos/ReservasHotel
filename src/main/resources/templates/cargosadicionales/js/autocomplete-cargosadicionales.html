@@ -16,38 +16,43 @@
 					success : function(data) {
 						response($.map(data, function(item) {
 							return {
-								value : item.id,
-								label : item.nombre,
+								value  : item.id,
+								label  : item.nombre,
 								precio : item.precioUnitario,								
-								clase : item.claseServicio,
+								clase  : item.claseServicio.nombre,
+								claseid: item.claseServicio.id
 							};
 						}));
 					},
 				});
 			},
 			select : function(event, ui) {
-				$("#buscar_producto").val(ui.item.label);
+			//	$("#buscar_producto").val(ui.item.label);
 				
-//				if(itemsHelper.hasProducto(ui.item.value)){
-//					itemsHelper.incrementaCantidad(ui.item.value, ui.item.precio);
-//					return false;
-//				}
+			if(itemsHelper.hasProducto(ui.item.value)){
+					itemsHelper.incrementaCantidad(ui.item.value, ui.item.precio);
+					return false;
+				}
 				
-//				var linea = $("#plantillaItemsFactura").html();
+				var linea = $("#plantillaItemsCargosAdicionales").html();
 
-//				linea = linea.replace(/{ID}/g, ui.item.value);
-//				linea = linea.replace(/{NOMBRE}/g, ui.item.label);
-//				linea = linea.replace(/{PRECIO}/g, ui.item.precio);
+				linea = linea.replace(/{ID}/g, ui.item.value);
+				linea = linea.replace(/{NOMBRE}/g, ui.item.label);
+				linea = linea.replace(/{PRECIO}/g, ui.item.precio);
+				linea = linea.replace(/{CLASE}/g, ui.item.clase);
+				linea = linea.replace(/{PROMOCION}/g, ui.item.clase);
+				linea = linea.replace(/{DESCUENTO}/g, ui.item.clase);
+				linea = linea.replace(/{claseID}/g, ui.item.claseid);
 
-//				$("#cargarItemProductos tbody").append(linea);
-//				itemsHelper.calcularImporte(ui.item.value, ui.item.precio, 1);
+				$("#cargarItemProductos tbody").append(linea);
+				itemsHelper.calcularImporte(ui.item.value, ui.item.precio, 1);
 
 				return false;
 			}
 		});
 
 		$("form").submit(function(){
-			$("#plantillaItemsFactura").remove();
+			$("#plantillaItemsCargosAdicionales").remove();
 			return;
 		});
 
@@ -58,11 +63,11 @@
 				$("#total_importe_" + id).html(parseInt(precio) * parseInt(cantidad));
 				this.calcularGranTotal();
 			},
+			
 			hasProducto: function(id){
 				
 				var resultado = false;
-				
-				$('input[name="item_id[]"]').each(function(){
+				$('input[name="item_id[]"]').each(function(){					
 					if(parseInt(id) == parseInt($(this).val()) ){
 						resultado = true;
 					}

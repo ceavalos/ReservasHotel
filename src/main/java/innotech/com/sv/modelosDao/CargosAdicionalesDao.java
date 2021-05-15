@@ -13,6 +13,8 @@ import innotech.com.sv.modelos.Servicio;
 
 public interface CargosAdicionalesDao  extends PagingAndSortingRepository<CargosAdicionales, Long>{
 	 public List<CargosAdicionales> findByEmpresa(Empresa empresa);
+	 
+	 @Query(value ="select * from cargosadicionales p where p.empresa_id =?1 and p.estado=0", nativeQuery = true )
 	 public Page<CargosAdicionales> findAllByEmpresa(Empresa empresa, Pageable pageable);
 	 
 

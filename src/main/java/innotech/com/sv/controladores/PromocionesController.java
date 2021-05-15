@@ -87,7 +87,7 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	     modelo.addAttribute("mensaje", mensaje);
 	     
 		//modelo.addAttribute("mensaje","hola desde thymeleaf");		
-		modelo.addAttribute("titulo","Mantenimiento de Descuentos");	
+		modelo.addAttribute("titulo","Mantenimiento de Promociones");	
 		modelo.addAttribute("datos",promocion);
 		modelo.addAttribute("empresa",mieempresa);
 		modelo.addAttribute("page",pageRender);
