@@ -20,7 +20,8 @@
 								label  : item.nombre,
 								precio : item.precioUnitario,								
 								clase  : item.claseServicio.nombre,
-								claseid: item.claseServicio.id
+								claseid: item.claseServicio.id,
+								promoid: $("#promocion").val()
 							};
 						}));
 					},
@@ -40,7 +41,7 @@
 				linea = linea.replace(/{NOMBRE}/g, ui.item.label);
 				linea = linea.replace(/{PRECIO}/g, ui.item.precio);
 				linea = linea.replace(/{CLASE}/g, ui.item.clase);
-				linea = linea.replace(/{PROMOCION}/g, ui.item.clase);
+				linea = linea.replace(/{PROMOCION}/g, ui.item.promoid);
 				linea = linea.replace(/{DESCUENTO}/g, ui.item.clase);
 				linea = linea.replace(/{claseID}/g, ui.item.claseid);
 

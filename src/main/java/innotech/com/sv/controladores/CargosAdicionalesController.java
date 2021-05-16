@@ -38,6 +38,7 @@ import innotech.com.sv.modelos.Habitacion;
 import innotech.com.sv.modelos.Ocupacion;
 import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Servicio;
+import innotech.com.sv.modelos.TiposHabitacion;
 import innotech.com.sv.paginator.PageRender;
 import innotech.com.sv.servicios.ActivoImp;
 import innotech.com.sv.servicios.CargosAdicionalesImp;
@@ -50,7 +51,7 @@ import innotech.com.sv.servicios.PromocionImp;
 
 
 @Controller
-@SessionAttributes({"cargosadicionales","empresatipos","ocupaciones","reserva","habitacion","claseservicio"})
+@SessionAttributes({"cargosadicionales","empresatipos","ocupaciones","reserva","habitacion","claseservicio","promocion","descuento"})
 @RequestMapping("/cargosadicionales")
 public class CargosAdicionalesController {
 	
@@ -120,19 +121,19 @@ public class CargosAdicionalesController {
 		modelo.addAttribute("page", pageRender);
 		modelo.addAttribute("habitacion",habitaciones );
 		modelo.addAttribute("claseservicio", claseServicio);
+		modelo.addAttribute("descuento", 0);
 		
 		return "cargosadicionales/listar";
 	}
 	
 		@RequestMapping(value="/ajaxservicio")
-		public String ajaxBrands(@RequestParam("tipohabitacion") long tipo, Model modelo, HttpServletRequest request) {
+		public String ajaxBrands(Model modelo,	HttpServletRequest request) {
 			//long tipo = (long) 1;
-			System.out.println("Mensaje desde /ajax/habitaciones");
+			System.out.println("Mensaje desde /ajaxservicio");
 			
-			HttpSession misession= request.getSession(true);		 
-			mieempresa = (Empresa) misession.getAttribute("empresaCart");
+			modelo.addAttribute("descuento", 0);
 			
-			return "cargosadicionales/form :: cargoservicio";
+			return "cargosadicionales/form :: descuen";
 
 		}
 		
@@ -176,11 +177,37 @@ public class CargosAdicionalesController {
 		modelo.addAttribute("titulo","Creación de Cargos Adicionales");	
 		modelo.addAttribute("cargosadicionales",cargos);
 		modelo.addAttribute("promocion",promociones);
+		modelo.addAttribute("descuento", 0);
 		
 		return "cargosadicionales/form";
 				
 	}
 
+	@RequestMapping(value="/ajaxpromo")
+	public String ajaxpromo(@RequestParam("promocion") long id, Model modelo, HttpServletRequest request) {
+		//long tipo = (long) 1;
+		
+		System.out.println("Mensaje desde ajaxpromo id= "+id);
+		//
+		if (id >0) {
+			HttpSession misession= request.getSession(true);		 
+			mieempresa = (Empresa) misession.getAttribute("empresaCart");
+			//
+			//List<Promocion> promociones = promocionServ.findByEmpresa(mieempresa.getId());
+			//
+			Promocion promocion = promocionServ.findById(id);
+			//System.out.println(" ProcDescuento" + promocion.getPorcdescuento());
+			//
+			modelo.addAttribute("descuento",promocion.getPorcdescuento());		
+			//
+		}else {
+			modelo.addAttribute("descuento",0);	
+		}
+
+		
+		return "cargosadicionales/form :: descuen";
+		
+	}
 	
 	@RequestMapping(value="/form", method=RequestMethod.POST)
 	public String salvar (@Valid @ModelAttribute(value="cargosadicionales") CargosAdicionales cargosadicionales, 
