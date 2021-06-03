@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>AdministraHotel</name>
 	<description>Aplicacion para adminitracion de hoteles</description>
-
+ 
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
