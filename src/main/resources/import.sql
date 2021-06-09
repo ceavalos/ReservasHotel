@@ -31,17 +31,17 @@ INSERT INTO USUARIOS_BY_CIA (usuario_id, empresa_id)  VALUES (1, 4);
 INSERT INTO USUARIOS_BY_CIA (usuario_id, empresa_id)  VALUES (2, 3);
 
 
-INSERT INTO clientes (nombredui, telefonocontacto, lugartrabajo, email, telefonotrabajo, dui, direcciondui, contacto1, contacto2) values ('Carlos Avalos1', '7888-52522', 'SISA-8', 'cipotex1@hotmail.com', '788852521' , '00867376-81','Residencial San Jacinto Av. San Jacinto Edif. p-6', 'Martha Morena de Avalos', 'Jose Ernesto Avalos' );
-INSERT INTO clientes (nombredui, telefonocontacto, lugartrabajo, email, telefonotrabajo, dui, direcciondui, contacto1, contacto2) values ('Carlos Avalos2', '7888-52523', 'SISA-8', 'cipotex2@hotmail.com', '788852522' , '00867376-82','Residencial San Jacinto Av. San Jacinto Edif. p-6', 'Martha Morena de Avalos', 'Jose Ernesto Avalos' );
-INSERT INTO clientes (nombredui, telefonocontacto, lugartrabajo, email, telefonotrabajo, dui, direcciondui, contacto1, contacto2) values ('Carlos Avalos3', '7888-52524', 'SISA-8', 'cipotex3@hotmail.com', '788852523' , '00867376-83','Residencial San Jacinto Av. San Jacinto Edif. p-6', 'Martha Morena de Avalos', 'Jose Ernesto Avalos' );
-INSERT INTO clientes (nombredui, telefonocontacto, lugartrabajo, email, telefonotrabajo, dui, direcciondui, contacto1, contacto2) values ('Carlos Avalos4', '7888-52525', 'SISA-8', 'cipotex4@hotmail.com', '788852524' , '00867376-84','Residencial San Jacinto Av. San Jacinto Edif. p-6', 'Martha Morena de Avalos', 'Jose Ernesto Avalos' );
+INSERT INTO clientes (nombredui, telefonocontacto, lugartrabajo, email, telefonotrabajo, dui, direcciondui, contacto1, contacto2) values ('Luis Miguel Novellino', '7888-52522', 'SISA-8', 'cipotex1@hotmail.com', '788852521' , '00867376-81','Residencial San Jacinto Av. San Jacinto Edif. p-6', 'Martha Morena de Avalos', 'Jose Ernesto Avalos' );
+INSERT INTO clientes (nombredui, telefonocontacto, lugartrabajo, email, telefonotrabajo, dui, direcciondui, contacto1, contacto2) values ('Carlos Avalos', '7888-52523', 'SISA-8', 'cipotex2@hotmail.com', '788852522' , '00867376-82','Residencial San Jacinto Av. San Jacinto Edif. p-6', 'Martha Morena de Avalos', 'Jose Ernesto Avalos' );
+INSERT INTO clientes (nombredui, telefonocontacto, lugartrabajo, email, telefonotrabajo, dui, direcciondui, contacto1, contacto2) values ('Maria Durcio de la Paz', '7888-52524', 'SISA-8', 'cipotex3@hotmail.com', '788852523' , '00867376-83','Residencial San Jacinto Av. San Jacinto Edif. p-6', 'Martha Morena de Avalos', 'Jose Ernesto Avalos' );
+INSERT INTO clientes (nombredui, telefonocontacto, lugartrabajo, email, telefonotrabajo, dui, direcciondui, contacto1, contacto2) values ('El Coyote Sanguinario', '7888-52525', 'SISA-8', 'cipotex4@hotmail.com', '788852524' , '00867376-84','Residencial San Jacinto Av. San Jacinto Edif. p-6', 'Martha Morena de Avalos', 'Jose Ernesto Avalos' );
 
 
-INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES, EMPRESA_ID ) VALUES('Single', 15, 45, 175, 1);
-INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES, EMPRESA_ID ) VALUES('Double', 25, 55, 275, 1);
-INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES,  EMPRESA_ID ) VALUES('Multiple', 35, 65, 375, 1);
-INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES,  EMPRESA_ID ) VALUES('Multiple2', 35, 65, 375, 1);
-INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES,  EMPRESA_ID ) VALUES('Multiple3', 35, 65, 375, 2);
+INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES, EMPRESA_ID ) VALUES('Single', 25, 130, 250, 1);
+INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES, EMPRESA_ID ) VALUES('Double', 45, 140, 275, 1);
+INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES,  EMPRESA_ID ) VALUES('Multiple', 65, 150, 375, 1);
+INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES,  EMPRESA_ID ) VALUES('Multiple2', 60, 145, 370, 1);
+INSERT INTO tiposHabitaciones (DESCRIPCION,  PRECIODIA,  PRECIOSEMANA, PRECIOMES,  EMPRESA_ID ) VALUES('Multiple3', 55, 140, 365, 2);
 
 INSERT INTO habitaciones (CODIGO, ESTADO, EMPRESA_ID, TIPOHABITACION_ID) VALUES ('FH01', 0, 1,1);
 INSERT INTO habitaciones (CODIGO, ESTADO, EMPRESA_ID, TIPOHABITACION_ID) VALUES ('FH02', 0, 1,1);

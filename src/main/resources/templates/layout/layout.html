@@ -56,14 +56,20 @@
 						href="/reserva/listar">Reservas<span class="sr-only">(current)</span>
 					</a></li>
 
-					<li class="nav-item"><a class="nav-link active"
-						href="/ocupacion/listar">Ocupaciones<span class="sr-only">(current)</span>
-					</a></li>
 
-					<li class="nav-item"><a class="nav-link active" href="/cargosadicionales/listar">Cargos Adicionales<span
-							class="sr-only">(current)</span>
-					</a></li>
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Ocupaciones </a>
+							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<li><a class="dropdown-item" href="/ocupacion/listar">Listado de Ocupaciones</a></li>
+								<li><a class="dropdown-item" href="/cargosadicionales/listar">Listado Cargos Adicionales</a></li>
+															</ul></li>
+
+					</ul>
+					
 					<li class="nav-item"><a class="nav-link active" href="#">Facturación<span
 							class="sr-only">(current)</span>
 					</a></li>

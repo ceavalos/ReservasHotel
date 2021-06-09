@@ -69,7 +69,7 @@ public class CargosAdicionales implements Serializable {
 	@ManyToOne
 	private Promocion promocion;
 	
-	private long total;
+	private float total;
 	
 	@PreUpdate
 	public void update() {		
@@ -78,7 +78,21 @@ public class CargosAdicionales implements Serializable {
 	
 	//Procedimiento para insertar el total de la reserva
 		public void actualizatotal() {
-			this.total = (long) (this.cantidad * this.precioUnitario);
+			float descuento = 0;
+			//			
+			float divisor = (float) 100.00;	
+			float  desc = (float) 1.0;
+			//System.out.println(" Division --> "+ desc/ divisor);
+			float resultado = 0;
+			if (this.promocion != null ) {
+				 desc = this.promocion.getPorcdescuento();
+				 resultado =    desc/divisor;
+				// System.out.println(" Salida cavalos-->"+ desc+ " divIsion --> " + resultado);
+				 
+				 descuento =   (float) ((desc / divisor) * (this.cantidad * this.precioUnitario));
+				 //System.out.println(" Total descuento "+ descuento );
+			}
+			this.total =  (float) ((this.cantidad * this.precioUnitario) - descuento);
 		};
 		
 	
@@ -163,11 +177,11 @@ public class CargosAdicionales implements Serializable {
 	}
 
 
-	public long getTotal() {
+	public float getTotal() {
 		return total;
 	}
 
-	public void setTotal(long total) {
+	public void setTotal(float total) {
 		this.total = total;
 	}
 

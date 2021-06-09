@@ -41,19 +41,20 @@ public class OcupacionesExcelExporter {
          
         createCell(row, 0, "Reserva ID", style); 
         createCell(row, 1, "Empresa", style);    
-        createCell(row, 2, "Tipo Habitacion", style);  
-        createCell(row, 3, "Habitacion", style);        
-        createCell(row, 4, "Cliente", style);
-        createCell(row, 5, "Periodo Reserva", style);
-        createCell(row, 6, "Fecha Inicio", style);
-        createCell(row, 7, "Fecha Fin", style);
-        createCell(row, 8, "Precio Reserva", style);
-        createCell(row, 9, "Descuento", style);
-        createCell(row, 10, "Dias Ocupacion", style);
-        createCell(row, 11, "Estado Reserva", style);
-        createCell(row, 12, "Precio con Descuento", style);
-        createCell(row, 13, "Recurrente", style);
-        createCell(row, 14, "Monto Deposito", style);        
+        createCell(row, 2, "Estado Ocupacion", style);
+        createCell(row, 3, "Tipo Habitacion", style);  
+        createCell(row, 4, "Habitacion", style);        
+        createCell(row, 5, "Cliente", style);
+        createCell(row, 6, "Periodo Reserva", style);
+        createCell(row, 7, "Fecha Inicio", style);
+        createCell(row, 8, "Fecha Fin", style);
+        createCell(row, 9, "Precio Reserva", style);
+        createCell(row, 10, "Descuento", style);
+        createCell(row, 11, "Dias Ocupacion", style);
+        createCell(row, 12, "Estado Reserva", style);
+        createCell(row, 13, "Precio con Descuento", style);
+        createCell(row, 14, "Recurrente", style);
+        createCell(row, 15, "Monto Deposito", style);        
     }
      
     private void createCell(Row row, int columnCount, Object value, CellStyle style) {
@@ -84,20 +85,21 @@ public class OcupacionesExcelExporter {
             int columnCount = 0;
              
             createCell(row, columnCount++, String.valueOf(user.getId()), style);
-            /*createCell(row, columnCount++, user.getEmpresa().getNombre(), style);
-            createCell(row, columnCount++, user.getTipohabitacion().getDescripcion(), style);
-            createCell(row, columnCount++, user.getHabitacion().getCodigo(), style);
-            createCell(row, columnCount++, user.getCliente().getNombredui(), style);
-            createCell(row, columnCount++, user.getPeriodoReserva().toString(), style);
-            createCell(row, columnCount++, user.getFechaInicio().toString(), style);
-            createCell(row, columnCount++, user.getFechaFin().toString(), style);
-            createCell(row, columnCount++, user.getPrecioreserva(), style);
-            createCell(row, columnCount++, user.getDescuento(), style);
-            createCell(row, columnCount++, user.getDiasOcupacion(), style);
-            createCell(row, columnCount++, user.getEstadoReserva().name() , style);
-            createCell(row, columnCount++, user.getMontoReservaConDescuento() , style);            
-            createCell(row, columnCount++, user.getRecurrente() , style);
-            createCell(row, columnCount++, user.getMontoDeposito(), style);*/
+            createCell(row, columnCount++, user.getEmpresa().getNombre(), style);
+            createCell(row, columnCount++, user.getEstado().toString(), style);
+            createCell(row, columnCount++, user.getReserva().getTipohabitacion().getDescripcion(), style);
+            createCell(row, columnCount++, user.getReserva().getHabitacion().getCodigo(), style);
+            createCell(row, columnCount++, user.getReserva().getCliente().getNombredui(), style);
+            createCell(row, columnCount++, user.getReserva().getPeriodoReserva().toString(), style);
+            createCell(row, columnCount++, user.getReserva().getFechaInicio().toString(), style);
+            createCell(row, columnCount++, user.getReserva().getFechaFin().toString(), style);
+            createCell(row, columnCount++, user.getReserva().getPrecioreserva(), style);
+            createCell(row, columnCount++, user.getReserva().getDescuento(), style);
+            createCell(row, columnCount++, user.getReserva().getDiasOcupacion(), style);
+            createCell(row, columnCount++, user.getReserva().getEstadoReserva().name() , style);
+            createCell(row, columnCount++, user.getReserva().getMontoReservaConDescuento() , style);            
+            createCell(row, columnCount++, user.getReserva().getRecurrente() , style);
+            createCell(row, columnCount++, user.getReserva().getMontoDeposito(), style);
             
         }
     }

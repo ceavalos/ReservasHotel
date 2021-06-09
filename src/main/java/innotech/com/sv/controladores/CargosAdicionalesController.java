@@ -215,6 +215,7 @@ public class CargosAdicionalesController {
 			@RequestParam(name = "item_id[]", required = false) Long[] itemId,
 			@RequestParam(name = "cantidad[]", required = false) Integer[] cantidad, 			
 			@RequestParam(name = "clase_id[]", required = false) Long[] claseId,
+			@RequestParam(name = "promocion_id[]", required = false) Long[] promocionId,
 			RedirectAttributes flash, SessionStatus status) {	
 		
 		if (itemId == null || itemId.length == 0) {
@@ -227,7 +228,16 @@ public class CargosAdicionalesController {
 		for (int i = 0; i < itemId.length; i++) {
 		
 			ClaseServicio claseserv = claseservImp.findById( claseId[i] );
-			Servicio servicio       = servicioImp.findById(itemId[i]);	
+			Servicio      servicio  = servicioImp.findById(itemId[i]);	
+			Promocion     promocion = null;
+			//
+			
+			if (promocionId.length >0 ) {
+			    System.out.println(" Carlitos...: longitud promocion "+ promocionId.length);
+			    if (promocionId[i] != null) {
+			    	promocion = promocionServ.findById(promocionId[i]); 
+			    }			    
+			}	
 			//
 			cargosadicionales.setClaseservicio(claseserv);
 			cargosadicionales.setServicio(servicio);
@@ -235,14 +245,10 @@ public class CargosAdicionalesController {
 			cargosadicionales.setPrecioUnitario(servicio.getPrecioUnitario());
 			cargosadicionales.setCantidad(cantidad[i]);
 			
+			cargosadicionales.setPromociono(promocion);
+			
 			cargosAdicionalesimp.save(cargosadicionales);
-			/*Producto producto = clienteService.findProductoById(itemId[i]);
-
-			ItemFactura linea = new ItemFactura();
-			linea.setCantidad(cantidad[i]);
-			linea.setProducto(producto);
-			factura.addItemFactura(linea);
-					*/
+			
 			log.info("ID: " + itemId[i].toString() + " Precio Unitario "+servicio.getPrecioUnitario() +", cantidad: " + cantidad[i].toString() + " ClaseId: "+claseId[i]  );
 		}
 
@@ -252,12 +258,7 @@ public class CargosAdicionalesController {
 		flash.addFlashAttribute("success", "Cargo Adicional creado con éxito!");
 		
 		
-		/*String mensajeFlash =  ( String.valueOf(cargosadicionales.getId()) != null)? "Cargos Adicionales Editados con éxito" : " Cargos Adicionales guardados con éxito "  ;
-		cargosAdicionalesimp.save(cargosadicionales);
-		model.addAttribute("titulo","Creación de Cargos Adicionales");
-	    status.setComplete();
-	    flash.addFlashAttribute("success", mensajeFlash );
-		*/
+		
 		return "redirect:/cargosadicionales/listar";
 		
 	};

@@ -1,0 +1,70 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head th:replace="layout/layout :: head">
+
+
+</head>
+<body>
+	
+	<header th:replace="layout/layout :: header"> </header>
+
+	<div class="container-fluid  py-4" >
+  
+		<div class="card bg-light">
+			
+			<h1
+			class="text-secondary border border-success border-top-0 border-left-0 border-right-0"
+			th:text="${titulo}"></h1>
+			
+			<div class="card-body" >
+
+				<h4 class= "card-title">
+				 <!-- <a th:href="@{/promocion/form}" class= "btn btn-primary btn-xs" >Crear Descuento</a> -->
+				 <a class="btn btn-success btn-xs float-right" th:href="@{'/ocupaciones/export/excel'}">XLS</a>
+				</h4>
+				
+				<table class="table table-striped ">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>EMPRESA</th>
+							<th>CLIENTE RESERVA</th>
+							<th>HABITACION</th>
+							<th>PERIODO RESERVA</th>
+							<th>FECHA INICIO</th>
+							<th>FECHA FIN</th>	
+							<th>EXTRA CARGO</th>						
+							<th>RECURRENTE</th>								
+						    <th>CHECK OUT</th>						
+						</tr>
+					</thead>
+					<tbody>
+			
+						<tr th:each="dato: ${datos}">							
+							<td> <a class="btn btn-primary btn-xs bg" th:href="@{/ocupacion/ver/} + ${dato.id}" th:text="${dato.id}"> </a>   </td>
+							<td th:text="${dato.empresa.nombre}"></td>
+							<td th:text="${dato.reserva.cliente.nombredui}"></td>
+							<td th:text="${dato.reserva.habitacion.codigo}"></td>
+							<td th:text="${dato.reserva.periodoreserva}"></td>
+							<td th:text="${dato.reserva.fechaInicio}"></td>
+							<td th:text="${dato.reserva.fechaFin}"></td>
+							<td><a class="btn btn-primary btn-xs" th:href="@{/cargosadicionales/crear/} + ${dato.id}" th:text="'Adcionar'" ></a></td>
+							<td th:text="${dato.reserva.recurrente}"></td>
+							<td><a class="btn btn-primary btn-xs" th:href="@{/promocion/form/} + ${dato.id}" th:text="'salida'" ></a></td>					        
+						</tr>
+			
+					</tbody>
+				</table>
+			     <nav th:replace="layout/paginator-nav :: paginator"></nav>
+			</div>
+
+		</div>
+	
+	</div>
+
+</body>
+
+<footer th:replace="layout/layout :: footer"></footer>
+
+
+</html>

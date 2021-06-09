@@ -32,7 +32,7 @@ import innotech.com.sv.servicios.OcupacionImp;
 
  
 @Controller
-public class ReservasExcelOcupaciones {
+public class OcupacionesExcelOcupaciones {
  
    
 	@Autowired
