@@ -12,11 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.Promocion;
-import innotech.com.sv.reportesXls.EmpresaExcelExporter;
 import innotech.com.sv.reportesXls.PromocionExcelExporter;
-import innotech.com.sv.servicios.EmpresaServiceImp;
 import innotech.com.sv.servicios.PromocionImp;
 
  

@@ -6,9 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import innotech.com.sv.modelos.Empresa;
-import innotech.com.sv.modelos.Ocupacion;
 import innotech.com.sv.modelos.Promocion;
-import innotech.com.sv.modelos.TiposHabitacion;
 
 public interface IPromocion {
 	public List<Promocion> findAll();

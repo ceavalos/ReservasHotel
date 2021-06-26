@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 import innotech.com.sv.modelos.Activo;
 import innotech.com.sv.modelos.Empresa;
-import innotech.com.sv.modelos.Habitacion;
 
 
 public interface IActivo {

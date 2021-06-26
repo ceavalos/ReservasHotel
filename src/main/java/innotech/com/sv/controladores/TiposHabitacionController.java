@@ -28,12 +28,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import innotech.com.sv.modelos.Cliente;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.TiposHabitacion;
 import innotech.com.sv.paginator.PageRender;
-import innotech.com.sv.servicios.ClientesImp;
 import innotech.com.sv.servicios.PromocionImp;
 import innotech.com.sv.servicios.TipoHabitacionImp;
 
@@ -54,10 +52,6 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 	
 	@Autowired
 	Empresa mieempresa ;
-	
-	@Autowired
-	private ClientesImp clienteService;
-	
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listar(@RequestParam(name = "page", defaultValue = "0") int page, Model modelo,

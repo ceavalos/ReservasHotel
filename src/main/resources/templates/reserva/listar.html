@@ -21,7 +21,7 @@
 				 <a th:href="@{/reserva/form}" class= "btn btn-primary btn-xs" >Crear Reserva</a>
 				 <a class="btn btn-success btn-xs float-right" th:href="@{'/reserva/export/excel'}">XLS</a> 
 				</h4>
-				
+			 <div class="table-responsive">	
 				<table class="table table-striped ">
 					<thead>
 						<tr>
@@ -57,6 +57,7 @@
 					 
 					</tbody>
 				</table>
+			</div>	
 			     <nav th:replace="layout/paginator-nav :: paginator"></nav>
 			</div>
 

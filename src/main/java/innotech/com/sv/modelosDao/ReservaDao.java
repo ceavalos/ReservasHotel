@@ -9,7 +9,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.Reserva;
-import innotech.com.sv.modelos.TiposHabitacion;
 
 public interface ReservaDao  extends PagingAndSortingRepository<Reserva, Long>{
 	public List<Reserva> findByEmpresa(Empresa empresa);

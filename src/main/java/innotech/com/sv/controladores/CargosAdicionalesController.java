@@ -3,8 +3,6 @@ package innotech.com.sv.controladores;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -38,16 +36,13 @@ import innotech.com.sv.modelos.Habitacion;
 import innotech.com.sv.modelos.Ocupacion;
 import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Servicio;
-import innotech.com.sv.modelos.TiposHabitacion;
 import innotech.com.sv.paginator.PageRender;
 import innotech.com.sv.servicios.ActivoImp;
-import innotech.com.sv.servicios.CargosAdicionalesImp;
 import innotech.com.sv.servicios.ICargosAdicionales;
 import innotech.com.sv.servicios.IClaseServicio;
 import innotech.com.sv.servicios.IOcupacion;
 import innotech.com.sv.servicios.IPromocion;
 import innotech.com.sv.servicios.IServicio;
-import innotech.com.sv.servicios.PromocionImp;
 
 
 @Controller

@@ -26,9 +26,7 @@ import innotech.com.sv.Authentication.LoginSuccessHandler;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.Usuarios;
 import innotech.com.sv.modelos.UsuariosBycia;
-import innotech.com.sv.modelosDao.EmpresaDao;
 import innotech.com.sv.modelosDao.UsuarioDao;
-import innotech.com.sv.modelosDao.UsuariosByciaDao;
 import innotech.com.sv.servicios.EmpresaServiceImp;
 import innotech.com.sv.servicios.UsuariosByciaImp;
 
@@ -37,9 +35,6 @@ import innotech.com.sv.servicios.UsuariosByciaImp;
 public class SelectEmpresaController {
 
 	private final static Logger logger = LoggerFactory.getLogger(LoginSuccessHandler.class);
-	
-	@Autowired
-	private UsuariosByciaDao usuarioBycia;
 	
 	@Autowired
 	private UsuarioDao  usuarioDao;

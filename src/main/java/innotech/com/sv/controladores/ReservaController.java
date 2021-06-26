@@ -1,9 +1,6 @@
 package innotech.com.sv.controladores;
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +11,6 @@ import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.dialect.hint.IndexQueryHintHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -23,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +31,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import innotech.com.sv.ProcesosServices.Miscelaneos;
 import innotech.com.sv.ProcesosServices.ReservaImp;
 import innotech.com.sv.modelos.Cliente;
-import innotech.com.sv.modelos.Disponibilidad;
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.EstadoReservasEnum;
 import innotech.com.sv.modelos.EstadosEnum;
@@ -343,6 +337,8 @@ protected final Log logger = LogFactory.getLog(this.getClass());
 						 model.addAttribute("titulo","Edicion de Reservas");						
 						 return "reserva/form";
 				   };
+				break;
+			default:
 				break;
 			 
 			}

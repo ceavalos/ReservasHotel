@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import innotech.com.sv.modelos.Empresa;
-import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Reserva;
 
 public interface IReserva {

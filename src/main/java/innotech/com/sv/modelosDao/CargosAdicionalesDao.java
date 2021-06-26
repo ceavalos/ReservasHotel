@@ -9,7 +9,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import innotech.com.sv.modelos.CargosAdicionales;
 import innotech.com.sv.modelos.Empresa;
-import innotech.com.sv.modelos.Servicio;
 
 public interface CargosAdicionalesDao  extends PagingAndSortingRepository<CargosAdicionales, Long>{
 	 public List<CargosAdicionales> findByEmpresa(Empresa empresa);

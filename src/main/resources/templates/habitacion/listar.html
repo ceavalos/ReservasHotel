@@ -21,7 +21,8 @@
 				 <a th:href="@{/habitacion/form}" class= "btn btn-primary btn-xs" >Crear Habitaciones</a>
 				 <!-- <a class="btn btn-success btn-xs float-right" th:href="@{'/promocion/export/excel'}">XLS</a> -->
 				</h4>
-				
+			  <div class="table-responsive">		
+				  
 				<table class="table table-striped ">
 					<thead>
 						<tr>
@@ -47,6 +48,7 @@
 					        onclick="     return confirm('Estas seguro que quieres eliminar?');"  ></a></td>  						 					
 					</tbody>
 				</table>
+				</div>
 			     <nav th:replace="layout/paginator-nav :: paginator"></nav>
 			</div>
 

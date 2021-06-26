@@ -8,9 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.Habitacion;
-import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.Reserva;
-import innotech.com.sv.modelos.Servicio;
 
 public interface IReserva {
 	public String procesa_reserva(long reserva, long empresa, long habitacion, Date fechaini, Date fechafin);

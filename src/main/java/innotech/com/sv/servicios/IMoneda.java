@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import innotech.com.sv.modelos.Cliente;
 import innotech.com.sv.modelos.Moneda;
 
 public interface IMoneda {

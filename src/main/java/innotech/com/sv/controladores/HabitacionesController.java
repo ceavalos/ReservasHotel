@@ -26,7 +26,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import innotech.com.sv.modelos.Empresa;
 import innotech.com.sv.modelos.Habitacion;
-import innotech.com.sv.modelos.Promocion;
 import innotech.com.sv.modelos.TiposHabitacion;
 import innotech.com.sv.paginator.PageRender;
 

@@ -18,7 +18,7 @@
 					<a  sec:authorize="hasRole('ROLE_ADMIN')"  th:href="@{/cliente/form}" class="btn btn-primary btn-xs">Crear Terceros</a>
 				</h4>
 
-
+			<div class="table-responsive">		
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -52,6 +52,7 @@
 					</tbody>
 
 				</table>
+			  </div>
 				<nav th:replace="layout/paginator-nav :: paginator"></nav>
 				
 			</div>

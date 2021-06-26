@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import innotech.com.sv.modelos.Empresa;
-import innotech.com.sv.modelos.FacturacionEnc;
 import innotech.com.sv.modelos.Habitacion;
 import innotech.com.sv.modelos.TiposHabitacion;
 

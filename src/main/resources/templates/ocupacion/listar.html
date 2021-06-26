@@ -22,7 +22,8 @@
 				 <!-- <a th:href="@{/promocion/form}" class= "btn btn-primary btn-xs" >Crear Descuento</a> -->
 				 <a class="btn btn-success btn-xs float-right" th:href="@{'/ocupaciones/export/excel'}">XLS</a>
 				</h4>
-				
+			 <div class="table-responsive">	
+				 
 				<table class="table table-striped ">
 					<thead>
 						<tr>
@@ -54,6 +55,7 @@
 						</tr>
 			
 					</tbody>
+				</div>
 				</table>
 			     <nav th:replace="layout/paginator-nav :: paginator"></nav>
 			</div>

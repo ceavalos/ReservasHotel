@@ -21,6 +21,7 @@
 				 <a th:href="@{/inventario/form}" class= "btn btn-primary btn-xs" >Registrar Activo</a>
 				 <a class="btn btn-success btn-xs float-right" th:href="@{'/activos/export/excel'}">XLS</a> 
 				</h4>
+			 <div class="table-responsive">	
 				
 				<table class="table table-striped ">
 					<thead>
@@ -53,6 +54,7 @@
 						</tr>					
 					</tbody>
 				</table>
+			</div>	
 			     <nav th:replace="layout/paginator-nav :: paginator"></nav>
 			</div>
 
