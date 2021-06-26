@@ -77,4 +77,21 @@ public class OcupacionesController {
 		return "ocupacion/ver";
 	}
 	
+	@RequestMapping(value="/checkout/{id}")
+	public String salida(@PathVariable(value="id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+		/*Ocupacion ocupacion = ocupacionServImp.findById(id);
+		if (ocupacion==null) {
+			flash.addAttribute("error", "La ocupación no existe en la Base de datos");
+			return "redirect:/ocupacion/listar";
+		}
+		//
+		model.put("datos",ocupacion);
+		*/
+		model.put("titulo", "CHECK OUT DE HABITACION " );
+		
+		//
+		System.out.println("Salida.. cavalos!!");
+		return "ocupacion/chekout";
+	}
+	
 }

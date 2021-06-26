@@ -67,7 +67,7 @@
 				//var descuento = $("#descuento").val()
 				//alert (" descuento = "+ parseInt(descuento));
 				//
-				$("#total_importe_" + id).html(  parseInt(precio) * parseInt(cantidad) -(parseInt(descuento)/100*(parseInt(precio) * parseInt(cantidad)))  );
+				$("#total_importe_" + id).html(  parseFloat(precio) * parseInt(cantidad) -(parseInt(descuento)/100*(parseFloat(precio) * parseInt(cantidad)))  );
 				this.calcularGranTotal();
 			},
 			
